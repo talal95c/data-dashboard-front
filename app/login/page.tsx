@@ -73,11 +73,13 @@ export default function LoginPage() {
         className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[550px] border border-slate-200"
       >
         {/* Left Pane - Dark Futuristic Gradient Background */}
-        <div className="w-full md:w-1/2 bg-[#0c0d0f] p-8 md:p-12 flex flex-col justify-between relative overflow-hidden text-white">
-          {/* Blue Mesh Glow Background */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(59,130,246,0.18),transparent_60%)] pointer-events-none" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(239,68,68,0.06),transparent_50%)] pointer-events-none" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-40" />
+        <div className="w-full md:w-1/2 bg-black p-8 md:p-12 flex flex-col justify-between relative overflow-hidden text-white">
+          {/* Ethereal Dither Halftone Background */}
+          <div 
+            className="absolute inset-0 bg-cover bg-left opacity-75 pointer-events-none select-none mix-blend-screen animate-pulse"
+            style={{ backgroundImage: "url('/dither_wave_bg.png')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30 pointer-events-none" />
 
           {/* Top Row: App Logo */}
           <div className="relative z-10 flex items-center gap-2.5">
@@ -89,26 +91,25 @@ export default function LoginPage() {
             </span>
           </div>
 
-          {/* Bottom Content: Headline & Stats */}
-          <div className="relative z-10 mt-12 md:mt-0 space-y-6">
-            {/* Avatar badge stack */}
-            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
-              <div className="flex -space-x-2">
-                <img className="w-5 h-5 rounded-full border border-[#0c0d0f] bg-slate-700" src="https://api.dicebear.com/7.x/avataaars/svg?seed=chef1" alt="Avatar" />
-                <img className="w-5 h-5 rounded-full border border-[#0c0d0f] bg-slate-700" src="https://api.dicebear.com/7.x/avataaars/svg?seed=chef2" alt="Avatar" />
-                <img className="w-5 h-5 rounded-full border border-[#0c0d0f] bg-slate-700" src="https://api.dicebear.com/7.x/avataaars/svg?seed=chef3" alt="Avatar" />
-              </div>
-              <span className="text-[10px] text-slate-300 font-medium tracking-wide">
-                Trusted by 500+ kitchen chefs
-              </span>
+          {/* Bottom Content: Headline & Paragraphs */}
+          <div className="relative z-10 mt-12 md:mt-0 space-y-4">
+            <div>
+              <h2 className="text-[20px] font-semibold tracking-tight text-white leading-tight font-sans">
+                Innovation
+              </h2>
+              <h3 className="text-[20px] font-semibold tracking-tight text-slate-400 leading-none mt-0.5">
+                as our core value.
+              </h3>
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight max-w-sm">
-              Your robot chef&apos;s brain, always learning.
-            </h2>
-            <p className="text-xs text-slate-400 font-light leading-relaxed max-w-xs">
-              Gordon RamArm processes your Ray-Ban Meta video recordings to automatically train your robot chef. Seamless sync, zero friction.
-            </p>
+            <div className="space-y-3 max-w-sm">
+              <p className="text-[11px] text-slate-300 font-light leading-relaxed">
+                Innovation is at the core of everything we do at Gordon. By developing cutting-edge culinary robotics solutions, we aim to transform how industries access and utilize kitchen automation. From Meta Glasses streams to real-time arm path calculations, we&apos;re setting new standards for culinary technology.
+              </p>
+              <p className="text-[11px] text-slate-400 font-light leading-relaxed">
+                At Gordon, automation isn&apos;t just a goal—it&apos;s our driving force. We believe that the key to a sustainable kitchen lies in bold ideas and forward-thinking solutions. By combining advanced AI vision with a commitment to culinary responsibility, we&apos;re revolutionizing how food is prepared and distributed, making chef-grade automation accessible and impactful for everyone.
+              </p>
+            </div>
           </div>
         </div>
 

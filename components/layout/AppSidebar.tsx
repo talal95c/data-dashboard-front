@@ -12,16 +12,70 @@ import {
   TbSettings, 
   TbLogout,
   TbUser,
-  TbChevronDown
+  TbChevronDown,
+  TbSelector,
+  TbHistory,
+  TbLayoutGrid,
+  TbSchool,
+  TbMessageCircle,
+  TbPlus,
+  TbPlug
 } from "react-icons/tb"
 import { useGordonStore } from "@/store/useGordonStore"
 import { motion, AnimatePresence } from "framer-motion"
 
+// Framer Motion configuration matching user code exactly
+const sidebarVariants = {
+  open: {
+    width: "15rem",
+  },
+  closed: {
+    width: "3.05rem",
+  },
+};
+
+const contentVariants = {
+  open: { display: "block", opacity: 1 },
+  closed: { display: "block", opacity: 1 },
+};
+
+const variants = {
+  open: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      x: { stiffness: 1000, velocity: -100 },
+    },
+  },
+  closed: {
+    x: -20,
+    opacity: 0,
+    transition: {
+      x: { stiffness: 100 },
+    },
+  },
+};
+
+const transitionProps = {
+  type: "tween",
+  ease: "easeOut",
+  duration: 0.2,
+  staggerChildren: 0.1,
+} as const;
+
+const staggerVariants = {
+  open: {
+    transition: { staggerChildren: 0.03, delayChildren: 0.02 },
+  },
+};
+
 export default function AppSidebar() {
   const pathname = usePathname()
   const router = useRouter()
+  
   const [isCollapsed, setIsCollapsed] = useState(true)
-  const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const [isOrgDropdownOpen, setIsOrgDropdownOpen] = useState(false)
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false)
   
   const { 
     showUpload, 
@@ -84,171 +138,273 @@ export default function AppSidebar() {
     router.push("/login")
   }, [setUser, setAccessToken, addToast, router])
 
-  // Framer Motion variants
-  const sidebarVariants = {
-    open: { width: "200px" },
-    closed: { width: "60px" }
-  }
-
-  const textVariants = {
-    open: { opacity: 1, x: 0, display: "block" },
-    closed: { opacity: 0, x: -10, transitionEnd: { display: "none" } }
-  }
-
   return (
     <>
-      {/* Desktop Collapsible Hover Sidebar (hidden on mobile) */}
-      <motion.aside 
+      {/* Desktop sidebar placeholder (reserves correct flow space so main layout does not flicker/shift on hover expansion) */}
+      <div className="w-[3.05rem] flex-shrink-0 hidden md:block bg-surface-0 border-r border-border-custom" />
+
+      {/* Actual Animated Collapsible Hover Sidebar */}
+      <motion.div
         initial="closed"
         animate={isCollapsed ? "closed" : "open"}
         variants={sidebarVariants}
-        transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+        transition={transitionProps}
         onMouseEnter={() => setIsCollapsed(false)}
         onMouseLeave={() => {
           setIsCollapsed(true)
-          setIsProfileOpen(false)
+          setIsOrgDropdownOpen(false)
+          setIsAccountDropdownOpen(false)
         }}
-        className="hidden md:flex flex-col items-center bg-surface-0 border-r border-border-custom py-4 flex-shrink-0 h-screen sticky top-0 left-0 z-20 overflow-hidden"
+        className="sidebar fixed left-0 top-0 bottom-0 z-40 h-full shrink-0 border-r border-border-custom bg-surface-0/70 backdrop-blur-md text-text-secondary select-none overflow-hidden flex flex-col"
       >
-        {/* BrandMark logo */}
-        <div className="flex items-center gap-3 w-full px-3.5 mb-6">
-          <div className="w-[30px] h-[30px] bg-bg-danger rounded-lg flex items-center justify-center flex-shrink-0 shadow-md shadow-red-950/20">
-            <TbRobot className="text-[15px] text-white" />
-          </div>
-          <motion.span 
-            variants={textVariants}
-            className="font-mono text-xs font-semibold tracking-tight text-text-primary whitespace-nowrap"
-          >
-            GORDON
-          </motion.span>
-        </div>
+        <motion.div
+          className="relative z-40 flex h-full shrink-0 flex-col bg-surface-0/70 backdrop-blur-md transition-all flex-1"
+          variants={contentVariants}
+        >
+          <motion.ul variants={staggerVariants} className="flex h-full flex-col p-0 m-0 list-none flex-1">
+            <div className="flex grow flex-col items-center h-full flex-1">
+              
+              {/* 1. Organization Dropdown (Top Row) */}
+              <div className="flex h-[54px] w-full shrink-0 border-b border-border-custom p-2 relative z-50">
+                <div className="mt-[1.5px] flex w-full">
+                  <div className="relative w-full">
+                    <button
+                      onClick={() => setIsOrgDropdownOpen(!isOrgDropdownOpen)}
+                      className="flex w-full items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-surface-2 text-text-primary transition-colors cursor-pointer text-left focus:outline-none"
+                    >
+                      <div className="w-5 h-5 rounded-md bg-bg-danger flex items-center justify-center text-[11px] font-bold text-white shrink-0">
+                        G
+                      </div>
+                      
+                      <motion.li
+                        variants={variants}
+                        className="flex items-center justify-between gap-1 w-full list-none"
+                      >
+                        {!isCollapsed && (
+                          <>
+                            <span className="text-[12px] font-semibold tracking-tight truncate max-w-[100px]">
+                              Gordon AI
+                            </span>
+                            <TbSelector className="h-3.5 w-3.5 text-text-muted shrink-0" />
+                          </>
+                        )}
+                      </motion.li>
+                    </button>
 
-        {/* Navigation Links */}
-        <nav className="flex flex-col gap-1 w-full px-2">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            if (item.disabled) {
-              return (
-                <div
-                  key={item.id}
-                  className="h-10 flex items-center gap-3 px-2.5 rounded-lg text-text-secondary opacity-40 cursor-not-allowed w-full"
-                  title={`${item.label} (Disabled)`}
-                >
-                  <Icon className="text-[17px] flex-shrink-0" />
-                  <motion.span variants={textVariants} className="text-xs font-medium whitespace-nowrap">
-                    {item.label}
-                  </motion.span>
+                    {/* Custom Org Dropdown Menu */}
+                    <AnimatePresence>
+                      {isOrgDropdownOpen && !isCollapsed && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 5 }}
+                          className="absolute left-0 mt-2 w-[180px] bg-surface-1 border border-border-strong rounded-lg p-1 shadow-lg z-50 flex flex-col gap-0.5"
+                        >
+                          <button
+                            onClick={() => {
+                              setIsOrgDropdownOpen(false)
+                              router.push("/dashboard/settings")
+                            }}
+                            className="flex items-center gap-2 px-2.5 py-1.5 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors cursor-pointer text-left w-full"
+                          >
+                            <TbSettings className="h-4 w-4" /> 
+                            <span>Manage Members</span>
+                          </button>
+                          
+                          <button
+                            onClick={() => {
+                              setIsOrgDropdownOpen(false)
+                              router.push("/dashboard/settings")
+                            }}
+                            className="flex items-center gap-2 px-2.5 py-1.5 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors cursor-pointer text-left w-full"
+                          >
+                            <TbPlug className="h-4 w-4" /> 
+                            <span>Integrations</span>
+                          </button>
+                          
+                          <div className="h-[1px] bg-border-custom my-1" />
+                          
+                          <button
+                            onClick={() => setIsOrgDropdownOpen(false)}
+                            className="flex items-center gap-2 px-2.5 py-1.5 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors cursor-pointer text-left w-full"
+                          >
+                            <TbPlus className="h-4 w-4" />
+                            <span>Create Organization</span>
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
-              )
-            }
+              </div>
 
-            return (
-              <Link
-                key={item.id}
-                href={item.href}
-                onClick={() => handleNavClick(item.id)}
-                className={`h-10 flex items-center gap-3 px-2.5 rounded-lg text-text-secondary hover:text-text-primary relative transition-colors duration-150 w-full group ${
-                  item.active ? "text-text-primary" : ""
-                }`}
-                title={isCollapsed ? item.label : undefined}
-              >
-                {item.active && (
-                  <motion.div
-                    layoutId="activeNavDesktop"
-                    className="absolute inset-0 bg-surface-2 rounded-lg -z-10"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <Icon className="text-[17px] flex-shrink-0 relative z-10" />
-                <motion.span 
-                  variants={textVariants}
-                  className="text-xs font-medium whitespace-nowrap relative z-10"
-                >
-                  {item.label}
-                </motion.span>
-              </Link>
-            )
-          })}
-        </nav>
+              {/* 2. Middle Navigation list (Scrollable area) */}
+              <div className="flex h-full w-full flex-col min-h-0 flex-1">
+                <div className="flex grow flex-col gap-4 min-h-0 flex-1 py-3">
+                  <div className="h-full grow px-2 overflow-y-auto">
+                    <div className="flex w-full flex-col gap-1">
+                      {navItems.map((item) => {
+                        const Icon = item.icon
+                        if (item.disabled) {
+                          return (
+                            <div
+                              key={item.id}
+                              className="flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 text-text-secondary opacity-40 cursor-not-allowed"
+                              title={`${item.label} (Disabled)`}
+                            >
+                              <Icon className="h-4 w-4 shrink-0" />
+                              <motion.li variants={variants} className="list-none">
+                                {!isCollapsed && (
+                                  <span className="ml-2 text-xs font-semibold whitespace-nowrap">
+                                    {item.label}
+                                  </span>
+                                )}
+                              </motion.li>
+                            </div>
+                          )
+                        }
 
-        {/* Bottom Section: Profile Dropdown menu */}
-        <div className="mt-auto px-2 w-full relative">
-          <AnimatePresence>
-            {isProfileOpen && !isCollapsed && (
-              <motion.div 
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                transition={{ duration: 0.15 }}
-                className="absolute bottom-12 left-2 right-2 bg-surface-1 border border-border-strong rounded-xl p-1.5 shadow-2xl flex flex-col gap-1 z-30"
-              >
-                {/* Profile info block */}
-                <div className="px-2.5 py-1.5 border-b border-border-custom">
-                  <span className="text-[10px] text-text-muted font-bold block uppercase tracking-wider">Account</span>
-                  <span className="text-[11px] font-semibold text-text-primary truncate block mt-0.5">{displayName}</span>
+                        return (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            onClick={() => handleNavClick(item.id)}
+                            className={`flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition-colors relative ${
+                              item.active 
+                                ? "bg-surface-2 text-text-primary font-semibold" 
+                                : "text-text-secondary hover:bg-surface-2/65 hover:text-text-primary"
+                            }`}
+                          >
+                            {item.active && (
+                              <motion.div
+                                layoutId="activeNavIndicator2"
+                                className="absolute inset-0 bg-surface-2 rounded-md -z-10"
+                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                              />
+                            )}
+                            <Icon className="h-4 w-4 shrink-0" />
+                            
+                            <motion.li variants={variants} className="list-none">
+                              {!isCollapsed && (
+                                <span className="ml-2 text-xs font-semibold whitespace-nowrap">
+                                  {item.label}
+                                </span>
+                              )}
+                            </motion.li>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
                 </div>
-                {/* Settings link */}
-                <Link
-                  href="/dashboard/settings"
-                  onClick={() => setIsProfileOpen(false)}
-                  className="flex items-center gap-2 px-2 py-1.5 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors"
-                >
-                  <TbSettings className="text-sm" />
-                  <span>Settings</span>
-                </Link>
-                {/* Logout */}
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 px-2 py-1.5 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer w-full text-left"
-                >
-                  <TbLogout className="text-sm" />
-                  <span>Logout</span>
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
-          {/* Trigger button */}
-          <button
-            onClick={() => {
-              if (isCollapsed) {
-                setIsCollapsed(false)
-                setIsProfileOpen(true)
-              } else {
-                setIsProfileOpen(!isProfileOpen)
-              }
-            }}
-            className={`w-full flex items-center justify-between p-1.5 rounded-xl border transition-all duration-150 cursor-pointer ${
-              isProfileOpen 
-                ? "bg-surface-2 border-border-strong text-text-primary" 
-                : "border-transparent text-text-secondary hover:bg-surface-2 hover:text-text-primary"
-            }`}
-          >
-            <div className="flex items-center gap-2.5 min-w-0">
-              <img
-                src={displayAvatar}
-                alt="Profile"
-                className="w-6 h-6 rounded bg-surface-1 border border-border-custom p-0.5 flex-shrink-0"
-              />
-              <motion.div variants={textVariants} className="text-left min-w-0">
-                <span className="text-[11px] font-semibold text-text-primary block truncate leading-none">
-                  {displayName}
-                </span>
-                <span className="text-[9px] text-text-muted block truncate mt-0.5 leading-none">
-                  {displayEmail}
-                </span>
-              </motion.div>
+                {/* 3. Bottom Actions (Settings & Profile dropdown) */}
+                <div className="flex flex-col p-2 border-t border-border-custom relative z-40 bg-surface-0">
+                  {/* Quick Settings Link */}
+                  <Link
+                    href="/dashboard/settings"
+                    className={`flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition-colors ${
+                      pathname === "/dashboard/settings"
+                        ? "bg-surface-2 text-text-primary font-semibold"
+                        : "text-text-secondary hover:bg-surface-2/65 hover:text-text-primary"
+                    }`}
+                  >
+                    <TbSettings className="h-4 w-4 shrink-0" />
+                    <motion.li variants={variants} className="list-none">
+                      {!isCollapsed && (
+                        <span className="ml-2 text-xs font-semibold whitespace-nowrap">Settings</span>
+                      )}
+                    </motion.li>
+                  </Link>
+
+                  {/* Account Selector Menu block */}
+                  <div className="relative mt-1">
+                    <button
+                      onClick={() => {
+                        if (isCollapsed) {
+                          setIsCollapsed(false)
+                          setIsAccountDropdownOpen(true)
+                        } else {
+                          setIsAccountDropdownOpen(!isAccountDropdownOpen)
+                        }
+                      }}
+                      className="flex h-8 w-full flex-row items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-surface-2 text-text-secondary hover:text-text-primary cursor-pointer w-full text-left focus:outline-none"
+                    >
+                      <img 
+                        src={displayAvatar} 
+                        alt="A" 
+                        className="w-4 h-4 rounded bg-surface-1 border border-border-custom p-0.5 shrink-0"
+                      />
+                      <motion.li
+                        variants={variants}
+                        className="flex w-full items-center gap-2 list-none"
+                      >
+                        {!isCollapsed && (
+                          <>
+                            <span className="text-[12px] font-semibold truncate max-w-[80px]">Account</span>
+                            <TbSelector className="ml-auto h-3.5 w-3.5 text-text-muted shrink-0" />
+                          </>
+                        )}
+                      </motion.li>
+                    </button>
+
+                    {/* Custom Account Dropdown menu options */}
+                    <AnimatePresence>
+                      {isAccountDropdownOpen && !isCollapsed && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -5 }}
+                          className="absolute bottom-9 left-0 w-[180px] bg-surface-1 border border-border-strong rounded-lg p-1 shadow-lg z-50 flex flex-col gap-0.5"
+                        >
+                          <div className="flex flex-row items-center gap-2 p-2 border-b border-border-custom">
+                            <img 
+                              src={displayAvatar} 
+                              alt="AL" 
+                              className="w-6 h-6 rounded bg-surface-2 border border-border-strong p-0.5 shrink-0"
+                            />
+                            <div className="flex flex-col text-left min-w-0">
+                              <span className="text-xs font-semibold text-text-primary truncate">
+                                {displayName}
+                              </span>
+                              <span className="text-[10px] text-text-muted truncate">
+                                {displayEmail}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <button
+                            onClick={() => {
+                              setIsAccountDropdownOpen(false)
+                              router.push("/dashboard/settings")
+                            }}
+                            className="flex items-center gap-2 px-2.5 py-1.5 text-xs text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors cursor-pointer text-left w-full"
+                          >
+                            <TbUser className="h-4 w-4" /> 
+                            <span>Profile</span>
+                          </button>
+                          
+                          <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-2 px-2.5 py-1.5 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer text-left w-full"
+                          >
+                            <TbLogout className="h-4 w-4" /> 
+                            <span>Sign out</span>
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+              </div>
+
             </div>
-            {!isCollapsed && (
-              <motion.div variants={textVariants}>
-                <TbChevronDown className={`text-xs transition-transform duration-200 ${isProfileOpen ? "rotate-180" : ""}`} />
-              </motion.div>
-            )}
-          </button>
-        </div>
-      </motion.aside>
+          </motion.ul>
+        </motion.div>
+      </motion.div>
 
-      {/* Mobile Bottom Navigation Bar (< 768px - stays fixed) */}
+      {/* Mobile Bottom Navigation Bar (< 768px - unaffected by hover states) */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-0 border-t border-border-custom flex items-center justify-around px-4 z-40 shadow-lg">
         {/* Logo indicator */}
         <div className="w-[30px] h-[30px] bg-bg-danger rounded-lg flex items-center justify-center">
@@ -272,7 +428,7 @@ export default function AppSidebar() {
                 />
               )}
               <Icon className={`text-[17px] relative z-10 ${item.active ? "text-text-primary" : ""}`} />
-              <span className={`text-[9px] mt-0.5 font-medium relative z-10 ${item.active ? "text-text-primary font-semibold" : ""}`}>
+              <span className={`text-[10px] mt-0.5 font-medium relative z-10 ${item.active ? "text-text-primary font-semibold" : ""}`}>
                 {item.label}
               </span>
             </Link>
@@ -291,7 +447,7 @@ export default function AppSidebar() {
             />
           )}
           <TbSettings className={`text-[17px] relative z-10 ${pathname === "/dashboard/settings" ? "text-text-primary" : ""}`} />
-          <span className={`text-[9px] mt-0.5 font-medium relative z-10 ${pathname === "/dashboard/settings" ? "text-text-primary font-semibold" : ""}`}>
+          <span className={`text-[10px] mt-0.5 font-medium relative z-10 ${pathname === "/dashboard/settings" ? "text-text-primary font-semibold" : ""}`}>
             Settings
           </span>
         </Link>

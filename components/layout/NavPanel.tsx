@@ -69,7 +69,7 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
   ]
 
   return (
-    <div className={`flex flex-col h-full bg-surface-1 border-r border-border-custom p-[14px_10px] w-[220px] flex-shrink-0 select-none overflow-y-auto ${
+    <div className={`flex flex-col h-full bg-surface-1/75 backdrop-blur-md border-r border-border-custom p-[14px_10px] w-[220px] flex-shrink-0 select-none overflow-y-auto ${
       isMobileDrawer ? "w-full border-r-0" : ""
     }`}>
       {/* Section 4.2: Source Filters */}

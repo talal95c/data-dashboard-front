@@ -51,7 +51,7 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
   const gordonStatusText = isOnline ? "Online" : gordonStatus === "busy" ? "Busy" : "Offline"
 
   return (
-    <header className="sticky top-0 z-10 bg-surface-2 border-b border-border-custom px-[18px] py-[14px] flex items-center justify-between select-none h-14">
+    <header className="sticky top-0 z-10 bg-surface-2 border-b border-border-custom px-5 py-3.5 flex items-center justify-between select-none h-14">
       {/* Left side: Mobile menu toggle + dynamic titles */}
       <div className="flex items-center gap-3">
         {onToggleMobileFilters && (
@@ -79,8 +79,8 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
         {/* Gordon Status Indicator */}
         <div className="flex items-center gap-2" title={`Gordon RamArm: ${gordonStatusText}`}>
           <span className={`w-[7px] h-[7px] rounded-full transition-colors duration-300 ${
-            gordonStatus === "online" 
-              ? "bg-green-500 shadow-sm shadow-green-500/50" 
+            gordonStatus === "online"
+              ? "bg-green-500"
               : gordonStatus === "busy"
               ? "bg-amber-500 animate-pulse"
               : "bg-gray-500"
@@ -93,7 +93,7 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
         {/* Upload Button */}
         <button
           onClick={handleUploadClick}
-          className="flex items-center gap-1.5 bg-fill-primary text-on-primary font-semibold text-[13px] rounded-lg py-[6px] px-[13px] hover:opacity-90 transition-all cursor-pointer shadow-sm select-none"
+          className="flex items-center gap-1.5 bg-fill-primary text-on-primary font-semibold text-[13px] rounded-lg py-[6px] px-[13px] hover:opacity-90 transition-opacity cursor-pointer select-none"
         >
           <TbUpload className="text-[13px] stroke-[2.5]" />
           <span>Upload</span>

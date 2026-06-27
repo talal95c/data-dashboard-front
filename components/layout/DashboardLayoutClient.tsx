@@ -15,7 +15,14 @@ export default function DashboardLayoutClient({
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   return (
-    <div className="flex h-screen bg-surface-2 text-white relative font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#07080a] text-white relative font-sans overflow-hidden">
+      {/* Ethereal background shadow glows (purple & blue) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[-10%] right-[-10%] w-[650px] h-[650px] rounded-full bg-purple-600/10 blur-[130px] opacity-80" />
+        <div className="absolute bottom-[-10%] left-[10%] w-[550px] h-[550px] rounded-full bg-blue-600/8 blur-[120px] opacity-60" />
+        <div className="absolute top-[40%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] opacity-50 rotate-12" />
+      </div>
+
       {/* Toast Notification Mount */}
       <ToastContainer />
 

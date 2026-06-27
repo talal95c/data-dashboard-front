@@ -103,8 +103,8 @@ export default function GalleryGrid() {
   }
 
   const slideUp = {
-    hidden: { opacity: 0, y: 12, filter: "blur(2px)" },
-    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", stiffness: 300, damping: 25 } as const }
+    hidden: { opacity: 0, y: 8 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 320, damping: 26 } as const }
   }
 
   return (
@@ -142,30 +142,29 @@ export default function GalleryGrid() {
                 key={cat.name}
                 variants={slideUp}
                 onClick={() => setCategoryFilter(isActive ? "all" : cat.name)}
-                className={`flex flex-col justify-between p-4 rounded-2xl bg-surface-1 border transition-all duration-200 h-[135px] text-left cursor-pointer w-full group relative overflow-hidden ${
-                  isActive 
-                    ? "border-border-accent bg-border-accent/5 shadow-lg shadow-blue-500/5" 
+                className={`flex flex-col justify-between p-4 rounded-xl bg-surface-1 border transition-all duration-150 h-32 text-left cursor-pointer w-full group relative overflow-hidden ${
+                  isActive
+                    ? "border-border-accent bg-border-accent/5"
                     : "border-border-custom hover:border-border-strong"
                 }`}
               >
                 {/* Folder graphic with sheets popping out */}
                 <div className="relative w-12 h-8 mt-1 select-none">
                   {/* Sheets behind folder */}
-                  <div className="absolute top-0.5 left-2.5 w-6 h-6 bg-slate-700 rounded border border-slate-600 shadow-sm flex items-center justify-center text-[7px] text-slate-300 font-semibold font-mono transform -rotate-12 group-hover:-translate-y-1 transition-transform">
+                  <div className="absolute top-0.5 left-2.5 w-6 h-6 bg-surface-0 rounded border border-border-custom flex items-center justify-center text-[7px] text-text-muted font-semibold font-mono transform -rotate-12 group-hover:-translate-y-1 transition-transform">
                     MOV
                   </div>
-                  <div className="absolute top-0 left-2 w-7 h-7 bg-slate-200 rounded border border-slate-300 shadow-md flex items-center justify-center text-[8px] text-[#333] font-extrabold font-mono transform rotate-6 group-hover:-translate-y-1.5 transition-transform">
+                  <div className="absolute top-0 left-2 w-7 h-7 bg-surface-2 rounded border border-border-strong flex items-center justify-center text-[8px] text-text-secondary font-bold font-mono transform rotate-6 group-hover:-translate-y-1.5 transition-transform">
                     MP4
                   </div>
                   {/* Folder body */}
-                  <div className="absolute bottom-0 inset-x-0 h-6 bg-slate-800 border-t border-x border-slate-700 rounded-t flex items-center px-1.5 shadow-md">
-                    {/* Small category indicator */}
+                  <div className="absolute bottom-0 inset-x-0 h-6 bg-surface-0 border-t border-x border-border-custom rounded-t flex items-center px-1.5">
                     <div style={{ color: cat.color }} className="opacity-80">
                       <CatIcon className="text-xs" />
                     </div>
                   </div>
-                  {/* Folder Tab back */}
-                  <div className="absolute bottom-5 left-1 w-5 h-1.5 bg-slate-800 border-t border-x border-slate-700 rounded-t" />
+                  {/* Folder Tab */}
+                  <div className="absolute bottom-5 left-1 w-5 h-1.5 bg-surface-0 border-t border-x border-border-custom rounded-t" />
                 </div>
 
                 <div>
