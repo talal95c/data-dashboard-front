@@ -13,19 +13,19 @@ import {
   TbPlus, 
   TbCheck,
   TbFlame,
-  TbScissors,
   TbStar,
   TbDroplet,
   TbEye,
   TbDatabase,
   TbVector,
-  TbSparkles
+  TbSparkles,
+  TbScissors
 } from "react-icons/tb"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function SettingsPage() {
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState<'profile' | 'robot' | 'marketplace'>('robot')
+  const [activeTab, setActiveTab] = useState<'robot' | 'marketplace' | 'profile'>('robot')
   const [isInstalling, setIsInstalling] = useState<string | null>(null)
   const [installProgress, setInstallProgress] = useState(0)
 
@@ -62,13 +62,17 @@ export default function SettingsPage() {
       id: "ramsay",
       name: "Gordon Ramsay",
       restaurant: "Restaurant Gordon Ramsay, London",
-      title: "Master Chef Trajectory Pack",
-      specialty: "High-Intensity Searing & Wok Cooking",
+      distinction: "3 Michelin Stars",
+      philosophy: "Intense precision and flavor-forward modernism by Gordon Ramsay.",
+      menuPrice: "Included / Free",
+      styleType: "Modern British",
+      openingDays: "Mon - Sat",
       level: 99,
       cost: 0,
       icon: TbFlame,
       color: "text-slate-800 bg-slate-50 border border-slate-200",
-      avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Gordon_Ramsay_at_the_2017_Gastro_Awards.jpg/320px-Gordon_Ramsay_at_the_2017_Gastro_Awards.jpg",
+      avatar: "/gordon ramsey.jpg",
+      objectPosition: "object-[center_15%]",
       specs: {
         trajectories: "184 Paths",
         gear: "Ray-Ban Meta v2",
@@ -85,13 +89,16 @@ export default function SettingsPage() {
       id: "bocuse",
       name: "Paul Bocuse",
       restaurant: "L'Auberge du Pont de Collonges, Lyon",
-      title: "French Classical Trajectory Pack",
-      specialty: "Precision Sauces & Sauce Plating",
+      distinction: "Michelin Legend",
+      philosophy: "Classic French haute cuisine and legacy by Paul Bocuse.",
+      menuPrice: "150 Credits",
+      styleType: "French Classical",
+      openingDays: "Tue - Sun",
       level: 98,
       cost: 150,
       icon: TbStar,
       color: "text-slate-800 bg-slate-50 border border-slate-200",
-      avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Paul_Bocuse_1980.jpg/320px-Paul_Bocuse_1980.jpg",
+      avatar: "/paul-bocuse.jpg",
       specs: {
         trajectories: "248 Paths",
         gear: "Ray-Ban Meta Pro",
@@ -108,13 +115,17 @@ export default function SettingsPage() {
       id: "ducasse",
       name: "Alain Ducasse",
       restaurant: "Le Louis XV, Monte Carlo",
-      title: "Michelin 3-Star Trajectory Pack",
-      specialty: "Haute Cuisine Broths & Roasting",
+      distinction: "3 Michelin Stars",
+      philosophy: "Naturalness, haute cuisine perfection and roasting by Alain Ducasse.",
+      menuPrice: "130 Credits",
+      styleType: "Haute Cuisine",
+      openingDays: "Mon - Fri",
       level: 97,
       cost: 130,
       icon: TbDroplet,
       color: "text-slate-800 bg-slate-50 border border-slate-200",
-      avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Alain_Ducasse_2015.jpg/320px-Alain_Ducasse_2015.jpg",
+      avatar: "/Alain-Ducasse.jpg",
+      objectPosition: "object-[center_25%]",
       specs: {
         trajectories: "210 Paths",
         gear: "Ray-Ban Meta v2",
@@ -131,13 +142,16 @@ export default function SettingsPage() {
       id: "bottura",
       name: "Massimo Bottura",
       restaurant: "Osteria Francescana, Modena",
-      title: "Avant-Garde Trajectory Pack",
-      specialty: "Modernist Plating & Pastry Dressing",
+      distinction: "3 Michelin Stars",
+      philosophy: "Avant-garde visual plating and artful cooking by Massimo Bottura.",
+      menuPrice: "110 Credits",
+      styleType: "Avant-Garde",
+      openingDays: "Tue - Sat",
       level: 96,
       cost: 110,
       icon: TbSparkles,
       color: "text-slate-800 bg-slate-50 border border-slate-200",
-      avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Massimo_Bottura_2016-02.jpg/320px-Massimo_Bottura_2016-02.jpg",
+      avatar: "/massimo.jpg",
       specs: {
         trajectories: "192 Paths",
         gear: "Ray-Ban Meta v2",
@@ -151,26 +165,29 @@ export default function SettingsPage() {
       ]
     },
     {
-      id: "oliver",
-      name: "Jamie Oliver",
-      restaurant: "Fifteen Restaurant, London",
-      title: "Rustic Home Cooking Pack",
-      specialty: "Fast Rustic Salads & Dressing",
-      level: 88,
+      id: "etchebest",
+      name: "Philippe Etchebest",
+      restaurant: "Maison Nouvelle, Bordeaux",
+      distinction: "Meilleur Ouvrier de France",
+      philosophy: "French culinary rigor and Bordeaux terroir by Philippe Etchebest.",
+      menuPrice: "70 Credits",
+      styleType: "Gastronomic Terroir",
+      openingDays: "Mon - Fri",
+      level: 92,
       cost: 70,
       icon: TbScissors,
       color: "text-slate-800 bg-slate-50 border border-slate-200",
-      avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Jamie_Oliver_Creative_Commons.jpg/320px-Jamie_Oliver_Creative_Commons.jpg",
+      avatar: "/phlipe etchebest.jpg",
       specs: {
-        trajectories: "120 Paths",
-        gear: "Ray-Ban Meta v1",
-        size: "8.6 GB",
-        accuracy: "93.4%"
+        trajectories: "135 Paths",
+        gear: "Ray-Ban Meta v2",
+        size: "9.2 GB",
+        accuracy: "95.1%"
       },
       skills: [
-        { name: "Rustic Herb Chopping (Speed)", value: 88 },
-        { name: "Quick Olive Oil Drizzle", value: 85 },
-        { name: "Fast Pan Tossing", value: 80 }
+        { name: "Steak Grilling (High Heat)", value: 92 },
+        { name: "Emulsion Whisking Control", value: 89 },
+        { name: "Vegetable Prep Speeds", value: 84 }
       ]
     }
   ]
@@ -247,36 +264,66 @@ export default function SettingsPage() {
       
       {/* Title & Description */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-xs">
+        <motion.div 
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          className="flex items-center gap-3"
+        >
+          <motion.div 
+            whileHover={{ scale: 1.06, rotate: [0, -5, 5, 0] }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-xs cursor-pointer"
+          >
             <TbRobot className="text-xl" />
-          </div>
+          </motion.div>
           <div>
             <h1 className="text-base font-bold text-slate-800 tracking-tight">Robotic Trajectory Center</h1>
             <p className="text-[10px] text-slate-400 font-semibold mt-0.5">Manage datasets and install chef motor paths captured via Ray-Ban Meta glasses</p>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Tabs navigation */}
-      <div className="flex border-b border-slate-100 gap-6 text-xs font-bold text-slate-400">
+      <div className="flex border-b border-slate-100 gap-6 text-xs font-bold text-slate-400 relative">
         <button 
           onClick={() => setActiveTab('robot')} 
-          className={`pb-2.5 cursor-pointer relative ${activeTab === 'robot' ? 'text-slate-950 font-bold border-b border-slate-950' : 'hover:text-slate-700'}`}
+          className={`pb-2.5 cursor-pointer relative transition-colors duration-150 ${activeTab === 'robot' ? 'text-slate-950 font-bold' : 'hover:text-slate-700'}`}
         >
-          Trajectory Manager
+          <span>Trajectory Manager</span>
+          {activeTab === 'robot' && (
+            <motion.div 
+              layoutId="activeTabUnderline" 
+              className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-950 z-10" 
+              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+            />
+          )}
         </button>
         <button 
           onClick={() => setActiveTab('marketplace')} 
-          className={`pb-2.5 cursor-pointer relative ${activeTab === 'marketplace' ? 'text-slate-950 font-bold border-b border-slate-950' : 'hover:text-slate-700'}`}
+          className={`pb-2.5 cursor-pointer relative transition-colors duration-150 ${activeTab === 'marketplace' ? 'text-slate-950 font-bold' : 'hover:text-slate-700'}`}
         >
-          Chef Marketplace
+          <span>Chef Marketplace</span>
+          {activeTab === 'marketplace' && (
+            <motion.div 
+              layoutId="activeTabUnderline" 
+              className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-950 z-10" 
+              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+            />
+          )}
         </button>
         <button 
           onClick={() => setActiveTab('profile')} 
-          className={`pb-2.5 cursor-pointer relative ${activeTab === 'profile' ? 'text-slate-950 font-bold border-b border-slate-950' : 'hover:text-slate-700'}`}
+          className={`pb-2.5 cursor-pointer relative transition-colors duration-150 ${activeTab === 'profile' ? 'text-slate-950 font-bold' : 'hover:text-slate-700'}`}
         >
-          Account & Devices
+          <span>Account & Devices</span>
+          {activeTab === 'profile' && (
+            <motion.div 
+              layoutId="activeTabUnderline" 
+              className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-950 z-10" 
+              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+            />
+          )}
         </button>
       </div>
 
@@ -409,7 +456,7 @@ export default function SettingsPage() {
                   <img 
                     src={activeChefConfig.avatar} 
                     alt={activeChefConfig.name} 
-                    className="w-full h-full object-cover" 
+                    className={`w-full h-full object-cover ${activeChefConfig.objectPosition || 'object-center'}`} 
                   />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -417,7 +464,7 @@ export default function SettingsPage() {
                     <h4 className="text-xs font-bold text-slate-800">{activeChefConfig.name}</h4>
                     <span className="text-[8px] bg-slate-900 text-white font-bold px-1 rounded-sm">Lvl {activeChefConfig.level}</span>
                   </div>
-                  <p className="text-[9px] text-slate-400 mt-1 font-semibold">Specialty: {activeChefConfig.specialty}</p>
+                  <p className="text-[9px] text-slate-400 mt-1 font-semibold">Style: {activeChefConfig.styleType} &bull; {activeChefConfig.distinction}</p>
                   
                   {/* Trajectory vector details list */}
                   <div className="flex items-center gap-4 mt-2.5 text-[8px] text-slate-400 font-bold uppercase tracking-wider">
@@ -454,8 +501,8 @@ export default function SettingsPage() {
               </button>
             </motion.div>
 
-            {/* Chefs skill data packs list */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Chefs skill data packs list (Visual structure of inspiration13.jpg adapted for gastronomy specs) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {chefMarketplace.map((chef) => {
                 const isPurchased = purchasedChefs.includes(chef.name)
                 const isActive = activeChef === chef.name
@@ -471,35 +518,40 @@ export default function SettingsPage() {
                       isActive ? 'border-slate-450' : 'border-slate-200/80'
                     }`}
                   >
-                    {/* Visual Card Cover Image (Mountain panel structure from inspiration13.jpg) */}
-                    <div className="relative w-full h-[135px] rounded-xl overflow-hidden bg-[#f7f7f5] flex flex-col justify-between p-3 border border-slate-100 shadow-inner">
-                      {/* Grid background canvas overlay */}
-                      <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+                    {/* Visual Card Cover Image (Mountain panel structure with linear dark gradient overlay) */}
+                    <div className="relative w-full h-[140px] rounded-xl overflow-hidden bg-slate-900 flex flex-col justify-between p-3.5 border border-slate-100 shadow-sm">
+                      {/* Photographic background of chef */}
+                      <img 
+                        src={chef.avatar} 
+                        alt={chef.name} 
+                        className={`absolute inset-0 w-full h-full object-cover select-none ${chef.objectPosition || 'object-center'}`}
+                      />
+                      {/* Gradient overlay for readability */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
 
-                      {/* Header tags overlay */}
-                      <div className="w-full flex items-center justify-between relative z-10">
-                        <span className="text-[8px] bg-slate-900 text-white rounded-full px-2 py-0.5 font-bold tracking-wider border border-slate-950 uppercase">
+                      {/* Top left rating tag */}
+                      <div className="relative z-10 flex items-center justify-between">
+                        <span className="text-[8px] bg-slate-950/80 text-white rounded-full px-2 py-0.5 font-bold tracking-wider uppercase border border-slate-800">
                           Lvl {chef.level}
                         </span>
                       </div>
 
-                      {/* Bottom row: Title/Restaurant (Left) + Directions Action button (Right) */}
-                      <div className="w-full flex items-end justify-between relative z-10">
+                      {/* Bottom Row: Name/Restaurant (Left) + Translucent Pill Button (Right) */}
+                      <div className="relative z-10 w-full flex items-end justify-between">
                         <div className="min-w-0 pr-2">
-                          <h4 className="text-[11px] font-extrabold text-slate-800 leading-tight truncate">
+                          <h4 className="text-xs font-bold text-white tracking-tight leading-tight truncate">
                             {chef.name}
                           </h4>
-                          <span className="text-[8px] text-slate-450 font-semibold truncate block mt-0.5">
-                            {chef.restaurant.split(",")[0]}
+                          <span className="text-[9px] text-white/80 font-medium truncate block mt-0.5 leading-none">
+                            {chef.restaurant}
                           </span>
                         </div>
 
-                        {/* Action buttons */}
+                        {/* Translucent pill shape CTA action button (Directions button style) */}
                         {isPurchased ? (
                           isActive ? (
-                            <div className="bg-slate-950 text-white rounded-lg px-2.5 py-1 text-[8px] font-extrabold shadow-xs uppercase tracking-wider flex items-center gap-1">
-                              <TbCheck className="text-[9px] text-emerald-400 stroke-[3]" />
-                              <span>Active</span>
+                            <div className="bg-white/20 backdrop-blur-md text-white border border-white/25 rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-wide">
+                              Active
                             </div>
                           ) : (
                             <button
@@ -507,7 +559,7 @@ export default function SettingsPage() {
                                 setActiveChef(chef.name)
                                 addToast(`Loaded trajectory weights for ${chef.name}`, "info")
                               }}
-                              className="bg-slate-900 hover:bg-slate-800 text-white rounded-lg px-2.5 py-1 text-[8px] font-extrabold shadow-xs cursor-pointer uppercase tracking-wider transition-colors"
+                              className="bg-white/25 hover:bg-white/35 backdrop-blur-md text-white border border-white/30 rounded-full px-3 py-1 text-[9px] font-bold cursor-pointer uppercase transition-colors"
                             >
                               Activate
                             </button>
@@ -515,7 +567,7 @@ export default function SettingsPage() {
                         ) : (
                           <button
                             onClick={() => handlePurchase(chef.id, chef.cost, chef.name)}
-                            className="bg-slate-900 hover:bg-slate-800 text-white rounded-lg px-2.5 py-1 text-[8px] font-extrabold shadow-xs cursor-pointer uppercase tracking-wider transition-colors"
+                            className="bg-white text-slate-900 hover:bg-slate-50 border border-white rounded-full px-3 py-1 text-[9px] font-bold cursor-pointer uppercase transition-colors shadow-xs"
                           >
                             Install
                           </button>
@@ -523,53 +575,44 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    {/* Bottom Content Row: Style details (Left) + Head face avatar bubble (Right) */}
-                    <div className="flex items-center justify-between gap-3 min-w-0">
-                      <div className="min-w-0">
-                        <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">Style Trajectory</span>
-                        <span className="text-[10px] font-bold text-slate-800 truncate block mt-0.5">{chef.specialty.split(" & ")[0]}</span>
-                        <span className="text-[8px] text-slate-400 font-semibold block truncate mt-0.5">Recorded via {chef.specs.gear}</span>
+                    {/* Bottom Details Section */}
+                    <div className="flex items-start justify-between gap-3 min-w-0 px-0.5">
+                      <div className="min-w-0 space-y-0.5">
+                        {/* Distinction Title (Gros) */}
+                        <h5 className="text-[11px] font-bold text-slate-800 uppercase tracking-tight">
+                          {chef.distinction}
+                        </h5>
+                        {/* Philosophy Description */}
+                        <p className="text-[10px] text-slate-400 font-medium leading-relaxed max-w-[210px]">
+                          {chef.philosophy}
+                        </p>
                       </div>
 
-                      {/* Head face avatar circle ("sa tete en bas" - Bottom Right) */}
-                      <div className="w-10 h-10 rounded-full border border-slate-200 overflow-hidden shadow-xs shrink-0 select-none relative bg-slate-50">
-                        <img 
-                          src={chef.avatar} 
-                          alt={chef.name} 
-                          className="w-full h-full object-cover" 
-                        />
-                        
-                        {/* Red heart badge overlay */}
-                        <div className="absolute -bottom-0.5 -right-0.5 bg-rose-500 text-white text-[7px] w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-xs select-none z-10">
-                          ❤️
-                        </div>
+                      {/* Minimalist line-art Cloche platter icon container */}
+                      <div className="w-11 h-11 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center shrink-0 shadow-xs">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 text-slate-400">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v3m-8.5 12h17a1 1 0 011 1v1a1 1 0 01-1 1h-17a1 1 0 01-1-1v-1a1 1 0 011-1zm1.5-1A7 7 0 0112 7a7 7 0 017 7H5z" />
+                        </svg>
                       </div>
                     </div>
 
-                    {/* Horizontal capsule stats block (Obertauern capsule style) */}
-                    <div className="bg-slate-50 border border-slate-100 rounded-full py-1.5 px-3 flex items-center justify-around text-[9px] font-bold text-slate-500 uppercase tracking-wide">
-                      <span className="flex flex-col items-center">
-                        <span className="text-slate-800 font-bold text-[9px]">{chef.specs.trajectories.split(" ")[0]}</span>
-                        <span className="text-[7px] text-slate-400 font-bold scale-90">Paths</span>
-                      </span>
-                      <span className="w-[1px] h-3 bg-slate-200" />
-                      <span className="flex flex-col items-center">
-                        <span className="text-slate-800 font-bold text-[9px]">{chef.specs.accuracy}</span>
-                        <span className="text-[7px] text-slate-400 font-bold scale-90">Accuracy</span>
-                      </span>
-                      <span className="w-[1px] h-3 bg-slate-200" />
-                      <span className="flex flex-col items-center">
-                        <span className="text-slate-800 font-bold text-[9px]">{chef.specs.size}</span>
-                        <span className="text-[7px] text-slate-400 font-bold scale-90">Weight</span>
-                      </span>
-                    </div>
+                    {/* Horizontal fine separator border-gray-200 */}
+                    <div className="border-t border-slate-100/80" />
 
-                    {/* Price tag */}
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-slate-400">
-                      <span>Dataset Price</span>
-                      <span className="text-[11px] font-bold text-slate-900">
-                        {chef.cost === 0 ? "Included" : `${chef.cost} Credits`}
-                      </span>
+                    {/* 3-Column horizontal stats area (Distance/Elevation/Duration layout) */}
+                    <div className="grid grid-cols-3 gap-5 text-left px-0.5">
+                      <div>
+                        <span className="text-[8px] uppercase tracking-wider text-slate-400 font-bold block">Menu Dégustation</span>
+                        <span className="text-[10px] font-bold text-slate-800 mt-1 block">{chef.menuPrice}</span>
+                      </div>
+                      <div>
+                        <span className="text-[8px] uppercase tracking-wider text-slate-400 font-bold block">Style</span>
+                        <span className="text-[10px] font-bold text-slate-800 mt-1 block">{chef.styleType}</span>
+                      </div>
+                      <div>
+                        <span className="text-[8px] uppercase tracking-wider text-slate-400 font-bold block">Ouverture</span>
+                        <span className="text-[10px] font-bold text-slate-800 mt-1 block">{chef.openingDays}</span>
+                      </div>
                     </div>
                   </motion.div>
                 )
