@@ -4,12 +4,10 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
-  TbRobot, 
   TbBrandFacebook, 
   TbBrandGoogle, 
-  TbLoader2, 
-  TbUser, 
-  TbMail 
+  TbLoader2,
+  TbChevronLeft
 } from "react-icons/tb"
 
 export default function LoginPage() {
@@ -34,7 +32,7 @@ export default function LoginPage() {
       
       const randomCode = Math.random().toString(36).substring(7)
       
-      // Navigate to callback route with parameters
+      // Navigate to callback route
       router.push(
         `/callback?code=${randomCode}&provider=${provider}&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`
       )
@@ -45,19 +43,26 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f3f4f6] text-slate-800 p-4 md:p-8 font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-[#07080a] text-white p-4 md:p-8 font-sans relative overflow-hidden select-none">
+      
+      {/* Background ambient lighting */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-600/5 blur-[130px] opacity-75" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-blue-600/5 blur-[120px] opacity-60" />
+      </div>
+
       <AnimatePresence>
         {errorMessage && (
           <motion.div 
             initial={{ opacity: 0, y: -20, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: -20, x: "-50%" }}
-            className="fixed top-6 left-1/2 transform bg-red-600 border border-red-500 text-white px-4 py-3 rounded-xl flex items-center gap-3 shadow-xl z-50 text-xs font-semibold"
+            className="fixed top-6 left-1/2 transform bg-red-950 border border-red-500/20 text-red-200 px-4 py-3 rounded-xl flex items-center gap-3 shadow-xl z-50 text-xs font-semibold"
           >
             <span>{errorMessage}</span>
             <button 
               onClick={() => setErrorMessage(null)} 
-              className="hover:text-gray-200 font-bold ml-2 cursor-pointer focus:outline-none"
+              className="hover:text-white font-bold ml-2 cursor-pointer focus:outline-none"
             >
               ✕
             </button>
@@ -65,146 +70,127 @@ export default function LoginPage() {
         )}
       </AnimatePresence>
 
-      {/* Main Dual-Pane Container Card */}
+      {/* Main Single-Pane Container (Inspired by target mockup) */}
       <motion.div 
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[550px] border border-slate-200"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="w-full max-w-2xl bg-[#0c0d12] rounded-3xl shadow-2xl p-8 md:p-14 relative z-10 border border-white/[0.02]"
       >
-        {/* Left Pane - Dark Futuristic Gradient Background */}
-        <div className="w-full md:w-1/2 bg-black p-8 md:p-12 flex flex-col justify-between relative overflow-hidden text-white">
-          {/* Ethereal Dither Halftone Background */}
-          <div 
-            className="absolute inset-0 bg-cover bg-left opacity-75 pointer-events-none select-none mix-blend-screen animate-pulse"
-            style={{ backgroundImage: "url('/dither_wave_bg.png')" }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30 pointer-events-none" />
+        {/* Back Button (top left) */}
+        <button
+          onClick={() => router.push("/")}
+          className="absolute top-6 left-6 flex items-center gap-1 bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 px-3 py-1.5 rounded-lg text-[11px] font-semibold text-slate-300 hover:text-white transition-all cursor-pointer"
+        >
+          <TbChevronLeft className="text-xs" />
+          <span>Back</span>
+        </button>
 
-          {/* Top Row: App Logo */}
-          <div className="relative z-10 flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-bg-danger rounded-lg flex items-center justify-center shadow-lg shadow-red-950/20">
-              <TbRobot className="text-sm text-white" />
+        {/* Form Inner Layout */}
+        <div className="max-w-md mx-auto flex flex-col items-center text-center">
+          
+          {/* Logo container: concentric spinning circles */}
+          <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center mb-6">
+            <div className="w-7 h-7 rounded-full border-2 border-dashed border-white/40 animate-[spin_30s_linear_infinite] flex items-center justify-center">
+              <div className="w-3.5 h-3.5 rounded-full border border-white/60" />
             </div>
-            <span className="font-semibold text-sm tracking-tight font-mono uppercase">
-              Gordon RamArm
+          </div>
+
+          {/* Heading */}
+          <div className="space-y-1.5 mb-8">
+            <h2 className="text-xl font-bold tracking-tight text-white md:text-2xl">
+              Yooo, welcome back!
+            </h2>
+            <p className="text-xs text-slate-400 font-light">
+              First time here? <span className="text-white font-bold hover:underline cursor-pointer">Sign up for free</span>
+            </p>
+          </div>
+
+          {/* Inputs section */}
+          <div className="w-full space-y-2.5 mb-4">
+            <input
+              type="text"
+              value={customName}
+              onChange={(e) => setCustomName(e.target.value)}
+              placeholder="Your name"
+              className="w-full px-4 py-3 bg-[#13141c] border border-white/5 focus:border-white/15 rounded-xl text-xs text-white placeholder-slate-500 font-medium focus:outline-none transition-all"
+            />
+
+            <input
+              type="email"
+              value={customEmail}
+              onChange={(e) => setCustomEmail(e.target.value)}
+              placeholder="Your email"
+              className="w-full px-4 py-3 bg-[#13141c] border border-white/5 focus:border-white/15 rounded-xl text-xs text-white placeholder-slate-500 font-medium focus:outline-none transition-all"
+            />
+          </div>
+
+          {/* Submit Sign In button */}
+          <button
+            onClick={() => handleLogin("google")}
+            disabled={loadingProvider !== null}
+            className="w-full bg-white text-slate-950 font-bold text-xs py-3 rounded-xl hover:opacity-90 active:scale-[0.99] transition-all cursor-pointer shadow-md select-none mb-3.5 disabled:opacity-50"
+          >
+            {loadingProvider !== null ? (
+              <TbLoader2 className="text-base text-slate-950 animate-spin" />
+            ) : (
+              <span>Sign in</span>
+            )}
+          </button>
+
+          {/* Magic link link */}
+          <button
+            onClick={() => handleLogin("google")}
+            className="text-[11px] text-slate-400 hover:text-white font-medium transition-colors cursor-pointer bg-transparent border-none"
+          >
+            Sign in using magic link
+          </button>
+
+          {/* Divider */}
+          <div className="relative w-full flex items-center justify-center my-6">
+            <div className="absolute inset-x-0 h-[1px] bg-white/5" />
+            <span className="relative z-10 px-3 bg-[#0c0d12] text-[9px] text-slate-500 font-bold uppercase tracking-widest">
+              or
             </span>
           </div>
 
-          {/* Bottom Content: Headline & Paragraphs */}
-          <div className="relative z-10 mt-12 md:mt-0 space-y-4">
-            <div>
-              <h2 className="text-[20px] font-semibold tracking-tight text-white leading-tight font-sans">
-                Innovation
-              </h2>
-              <h3 className="text-[20px] font-semibold tracking-tight text-slate-400 leading-none mt-0.5">
-                as our core value.
-              </h3>
-            </div>
+          {/* Side-by-side SSO custom styled buttons */}
+          <div className="w-full grid grid-cols-2 gap-3 mb-8">
+            <button
+              onClick={() => handleLogin("google")}
+              disabled={loadingProvider !== null}
+              className="flex items-center justify-center gap-2 border border-white/5 hover:border-white/15 bg-white/[0.02] text-white py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer hover:bg-white/[0.04] active:scale-[0.99]"
+            >
+              {loadingProvider === "google" ? (
+                <TbLoader2 className="text-xs text-blue-400 animate-spin" />
+              ) : (
+                <TbBrandGoogle className="text-xs text-white/80" />
+              )}
+              <span>Sign in with Google</span>
+            </button>
 
-            <div className="space-y-3 max-w-sm">
-              <p className="text-[11px] text-slate-300 font-light leading-relaxed">
-                Innovation is at the core of everything we do at Gordon. By developing cutting-edge culinary robotics solutions, we aim to transform how industries access and utilize kitchen automation. From Meta Glasses streams to real-time arm path calculations, we&apos;re setting new standards for culinary technology.
-              </p>
-              <p className="text-[11px] text-slate-400 font-light leading-relaxed">
-                At Gordon, automation isn&apos;t just a goal—it&apos;s our driving force. We believe that the key to a sustainable kitchen lies in bold ideas and forward-thinking solutions. By combining advanced AI vision with a commitment to culinary responsibility, we&apos;re revolutionizing how food is prepared and distributed, making chef-grade automation accessible and impactful for everyone.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Pane - Clean Minimalist Input Form (Light) */}
-        <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-between bg-white">
-          {/* Form Header */}
-          <div className="flex justify-between items-start">
-            <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-900 border border-slate-200">
-              <TbRobot className="text-base" />
-            </div>
-            <span className="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">
-              Demo Portal
-            </span>
+            <button
+              onClick={() => handleLogin("facebook")}
+              disabled={loadingProvider !== null}
+              className="flex items-center justify-center gap-2 border border-white/5 hover:border-white/15 bg-white/[0.02] text-white py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer hover:bg-white/[0.04] active:scale-[0.99]"
+            >
+              {loadingProvider === "facebook" ? (
+                <TbLoader2 className="text-xs text-blue-400 animate-spin" />
+              ) : (
+                <TbBrandFacebook className="text-xs text-white/80" />
+              )}
+              <span>Sign in with Facebook</span>
+            </button>
           </div>
 
-          {/* Form Fields */}
-          <div className="my-8 md:my-0 space-y-6">
-            <div>
-              <h3 className="text-2xl font-bold tracking-tight text-slate-950">
-                Get Beta Access
-              </h3>
-              <p className="text-xs text-slate-500 mt-1">
-                Customize your mock profile and connect your account.
-              </p>
-            </div>
-
-            {/* Inputs */}
-            <div className="space-y-3.5">
-              <div>
-                <label className="text-[11px] font-bold text-slate-600 block mb-1 uppercase tracking-wider">
-                  Your Name
-                </label>
-                <div className="relative">
-                  <TbUser className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm" />
-                  <input
-                    type="text"
-                    value={customName}
-                    onChange={(e) => setCustomName(e.target.value)}
-                    placeholder="Enter name (e.g. Chef Pierre)"
-                    className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-slate-400 focus:bg-white transition-all font-medium"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-bold text-slate-600 block mb-1 uppercase tracking-wider">
-                  Your Email
-                </label>
-                <div className="relative">
-                  <TbMail className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm" />
-                  <input
-                    type="email"
-                    value={customEmail}
-                    onChange={(e) => setCustomEmail(e.target.value)}
-                    placeholder="Enter email (e.g. pierre@cooking.ai)"
-                    className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-slate-400 focus:bg-white transition-all font-medium"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Buttons stack */}
-            <div className="space-y-3 pt-2">
-              <button
-                onClick={() => handleLogin("google")}
-                disabled={loadingProvider !== null}
-                className="w-full flex items-center justify-center gap-3 border border-slate-200 rounded-xl py-3 px-4 font-semibold text-xs transition-all duration-200 cursor-pointer shadow-sm bg-white text-slate-800 hover:bg-slate-50 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none"
-              >
-                {loadingProvider === "google" ? (
-                  <TbLoader2 className="text-base text-blue-500 animate-spin" />
-                ) : (
-                  <TbBrandGoogle className="text-base text-[#EA4335]" />
-                )}
-                <span>Continue with Google</span>
-              </button>
-
-              <button
-                onClick={() => handleLogin("facebook")}
-                disabled={loadingProvider !== null}
-                className="w-full flex items-center justify-center gap-3 border border-slate-200 rounded-xl py-3 px-4 font-semibold text-xs transition-all duration-200 cursor-pointer shadow-sm bg-white text-slate-800 hover:bg-slate-50 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none"
-              >
-                {loadingProvider === "facebook" ? (
-                  <TbLoader2 className="text-base text-blue-500 animate-spin" />
-                ) : (
-                  <TbBrandFacebook className="text-base text-[#1877F2]" />
-                )}
-                <span>Continue with Facebook</span>
-              </button>
-            </div>
+          {/* Legal notes */}
+          <div className="text-[10px] text-slate-500 leading-relaxed max-w-xs">
+            You acknowledge that you read, and agree, to our{" "}
+            <a href="#" className="text-slate-400 underline hover:text-white transition-colors">Terms of Service</a>{" "}
+            and our{" "}
+            <a href="#" className="text-slate-400 underline hover:text-white transition-colors">Privacy Policy</a>.
           </div>
 
-          {/* Legal Note */}
-          <div className="text-[10px] text-slate-400 leading-normal max-w-xs border-t border-slate-100 pt-4">
-            Read-only access. Data trains Gordon RamArm only. By signing in, you agree to our Terms.
-          </div>
         </div>
       </motion.div>
     </div>

@@ -103,8 +103,8 @@ export default function GalleryGrid() {
   }
 
   const slideUp = {
-    hidden: { opacity: 0, y: 8 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 320, damping: 26 } as const }
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { duration: 0.25 } as const }
   }
 
   return (
@@ -142,7 +142,7 @@ export default function GalleryGrid() {
                 key={cat.name}
                 variants={slideUp}
                 onClick={() => setCategoryFilter(isActive ? "all" : cat.name)}
-                className={`flex flex-col justify-between p-4 rounded-xl bg-surface-1 border transition-all duration-150 h-32 text-left cursor-pointer w-full group relative overflow-hidden ${
+                className={`flex flex-col justify-between p-4 rounded-xl bg-surface-1 border transition-colors duration-150 h-32 text-left cursor-pointer w-full group relative overflow-hidden ${
                   isActive
                     ? "border-border-accent bg-border-accent/5"
                     : "border-border-custom hover:border-border-strong"
@@ -192,7 +192,7 @@ export default function GalleryGrid() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center p-12 bg-surface-1 border border-border-custom rounded-2xl h-[200px]"
+            className="flex flex-col items-center justify-center p-12 bg-surface-1 border border-border-custom rounded-xl h-[200px]"
           >
             <TbVideoOff className="text-2xl text-text-muted mb-2" />
             <p className="text-xs text-text-secondary font-medium">
@@ -201,7 +201,7 @@ export default function GalleryGrid() {
           </motion.div>
         ) : (
           /* Files Table View */
-          <div className="bg-surface-1 border border-border-custom rounded-2xl overflow-hidden shadow-xl flex-1 flex flex-col min-h-0">
+          <div className="bg-surface-1 border border-border-custom rounded-xl overflow-hidden flex-1 flex flex-col min-h-0">
             {/* Table Header */}
             <div className="grid grid-cols-12 px-5 py-3 border-b border-border-custom bg-surface-0/60 text-[10px] font-bold text-text-muted tracking-wider uppercase">
               <div className="col-span-6">Name</div>
@@ -242,7 +242,7 @@ export default function GalleryGrid() {
                     {/* Category */}
                     <div className="col-span-2 text-text-secondary truncate pr-2">
                       {video.category ? (
-                        <span className="bg-surface-2 border border-border-custom text-text-secondary text-[10px] font-bold px-2 py-0.5 rounded-[20px] uppercase">
+                        <span className="bg-surface-2 border border-border-custom text-text-secondary text-[10px] font-medium px-2 py-0.5 rounded tracking-wide">
                           {video.category}
                         </span>
                       ) : (
@@ -271,7 +271,7 @@ export default function GalleryGrid() {
                       {video.status === "analyzed" ? (
                         <button
                           onClick={(e) => handleGordonClick(e, video)}
-                          className="opacity-0 group-hover:opacity-100 flex items-center justify-center w-8 h-8 bg-fill-primary text-on-primary rounded-lg transition-all shadow-md cursor-pointer active:scale-95"
+                          className="opacity-0 group-hover:opacity-100 flex items-center justify-center w-8 h-8 bg-fill-primary text-on-primary rounded-lg transition-all cursor-pointer active:scale-95"
                           title="Send to Gordon Robot"
                         >
                           <TbRobot className="text-base" />
@@ -307,7 +307,7 @@ export default function GalleryGrid() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
-              className="fixed top-0 bottom-0 right-0 w-full sm:w-[420px] bg-surface-1 border-l border-border-custom z-40 shadow-2xl flex flex-col"
+              className="fixed top-0 bottom-0 right-0 w-full sm:w-[420px] bg-surface-1 border-l border-border-custom z-40 flex flex-col"
             >
               {/* Header */}
               <div className="p-4 border-b border-border-custom flex items-center justify-between bg-surface-0">
@@ -335,26 +335,21 @@ export default function GalleryGrid() {
                     />
                   ) : (
                     <>
-                      {selectedVideo.category ? (
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 z-10">
-                          <span className="text-[10px] uppercase font-bold tracking-widest text-border-accent mb-1">
+                      {selectedVideo.category && (
+                        <div className="absolute bottom-0 inset-x-0 px-4 py-3 bg-surface-0/80 border-t border-border-custom z-10">
+                          <span className="text-[10px] font-medium text-text-muted uppercase tracking-wide block">
                             Detected Category
                           </span>
-                          <span className="text-[14px] font-bold text-white">
+                          <span className="text-[13px] font-semibold text-text-primary mt-0.5 block">
                             {selectedVideo.category}
                           </span>
                         </div>
-                      ) : null}
+                      )}
 
-                      {/* Pulse wave animation in player */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-                        <div className="w-24 h-24 bg-border-accent rounded-full animate-ping"></div>
+                      <div className="w-10 h-10 bg-white/8 hover:bg-white/15 text-white rounded-full flex items-center justify-center cursor-pointer transition-colors border border-white/10 relative z-20">
+                        <TbPlayerPlay className="text-lg ml-0.5" />
                       </div>
-
-                      <div className="w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center cursor-pointer transition-all border border-white/10 shadow-lg relative z-20">
-                        <TbPlayerPlay className="text-xl ml-0.5" />
-                      </div>
-                      <span className="text-[11px] text-text-secondary mt-3 relative z-20 font-medium bg-black/40 px-2 py-0.5 rounded">
+                      <span className="text-[11px] text-text-muted mt-3 relative z-20 font-medium">
                         Ray-Ban Meta Stream Preview
                       </span>
                     </>
@@ -369,7 +364,7 @@ export default function GalleryGrid() {
                   <div className="flex items-center gap-2">
                     <StatusBadge status={selectedVideo.status} />
                     {selectedVideo.category && (
-                      <span className="bg-surface-2 border border-border-custom text-text-secondary text-[10px] font-bold px-2 py-0.5 rounded-[20px] uppercase tracking-wide">
+                      <span className="bg-surface-2 border border-border-custom text-text-secondary text-[10px] font-medium px-2 py-0.5 rounded tracking-wide tracking-wide">
                         {selectedVideo.category}
                       </span>
                     )}
@@ -425,7 +420,7 @@ export default function GalleryGrid() {
                 {selectedVideo.status === "analyzed" && (
                   <button
                     onClick={(e) => handleGordonClick(e, selectedVideo)}
-                    className="w-full flex items-center justify-center gap-2 bg-fill-primary text-on-primary font-bold text-[13px] py-3 rounded-lg hover:opacity-90 transition-all cursor-pointer shadow-md select-none"
+                    className="w-full flex items-center justify-center gap-2 bg-fill-primary text-on-primary font-semibold text-[13px] py-3 rounded-lg hover:opacity-90 transition-opacity cursor-pointer select-none"
                   >
                     <TbRobot className="text-base" />
                     <span>Send to Gordon RamArm</span>

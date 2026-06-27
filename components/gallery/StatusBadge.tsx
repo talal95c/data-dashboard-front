@@ -33,7 +33,7 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
   const current = config[status] || config.pending
 
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-[20px] text-[10px] font-semibold tracking-wider leading-none select-none uppercase ${current.bgClass} ${current.textClass}`}>
+    <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium tracking-wide leading-none select-none ${current.bgClass} ${current.textClass}`}>
       {current.label}
     </span>
   )

@@ -75,11 +75,11 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
   return (
     <div 
       onClick={onClick}
-      className="group relative flex flex-col bg-surface-1 border border-border-custom hover:border-border-strong rounded-xl overflow-hidden transition-all duration-200 cursor-pointer select-none"
+      className="group relative flex flex-col bg-surface-1 border border-border-custom hover:border-border-strong rounded-lg overflow-hidden transition-colors duration-150 cursor-pointer select-none"
     >
       {/* 1. Thumbnail Region (106px height) */}
       <div 
-        className="h-[106px] w-full relative flex items-center justify-center overflow-hidden"
+        className="h-[112px] w-full relative flex items-center justify-center overflow-hidden"
         style={{ backgroundColor: design.bg }}
       >
         {/* Category Centered Icon */}
@@ -111,7 +111,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
         {video.status === "analyzed" && (
           <button
             onClick={handleGordonClick}
-            className="absolute top-[7px] right-[7px] hidden group-hover:flex items-center gap-1 bg-fill-primary text-on-primary text-[10px] font-bold py-[3px] px-[6px] rounded hover:opacity-90 transition-all shadow-md z-10 cursor-pointer"
+            className="absolute top-[7px] right-[7px] hidden group-hover:flex items-center gap-1 bg-fill-primary text-on-primary text-[10px] font-semibold py-[3px] px-[6px] rounded hover:opacity-90 transition-opacity z-10 cursor-pointer"
           >
             <TbRobot className="text-xs" />
             <span>Gordon</span>
@@ -120,7 +120,7 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
       </div>
 
       {/* 2. Info Region (padding 9px 11px) */}
-      <div className="p-[9px_11px] flex flex-col justify-between flex-1 min-h-[56px] border-t border-border-custom/50">
+      <div className="py-2.5 px-3 flex flex-col justify-between flex-1 min-h-[56px] border-t border-border-custom/50">
         {/* Video Title */}
         <h3 className="text-[12px] font-medium text-text-primary truncate" title={video.title}>
           {video.title}

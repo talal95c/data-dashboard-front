@@ -136,8 +136,8 @@ export default function UploadZone() {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: -15, filter: "blur(2px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
       id="upload-dropzone" 
       className="p-[18px_18px_0_18px] select-none relative"
     >
@@ -158,7 +158,7 @@ export default function UploadZone() {
         onClick={onButtonClick}
         animate={{ scale: isDragActive ? 1.01 : 1 }}
         transition={{ type: "spring", stiffness: 350, damping: 25 }}
-        className={`relative flex flex-col items-center justify-center rounded-xl p-[28px_20px] text-center border-1.5 transition-all duration-150 cursor-pointer ${
+        className={`relative flex flex-col items-center justify-center rounded-lg p-7 text-center border transition-all duration-150 cursor-pointer ${
           isDragActive
             ? "border-border-accent bg-bg-accent/40"
             : "border-dashed border-border-strong bg-surface-1 hover:border-text-secondary"
