@@ -1,41 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  /* Surfaces — three-step dark scale */
-  --surface-0: #0c0d10;
-  --surface-1: #131519;
-  --surface-2: #1a1c22;
+  /* Colors - Notion / Grammarly Light Aesthetic */
+  --surface-0: #f7f7f5; /* Sidebar background (Notion light gray sidebar) */
+  --surface-1: #ffffff; /* NavPanel, cards, forms */
+  --surface-2: #ffffff; /* Page content workspace background */
+  
+  --text-primary: #1a1a1a; /* Dark charcoal text */
+  --text-secondary: #4b5563; /* slate-600 */
+  --text-muted: #8e9297; /* slate-400 */
+  
+  --border: #eaeaea; /* Thin crisp border */
+  --border-strong: #d8d8d8; /* Muted strong divider */
+  --border-accent: #0066cc; /* Apple blue */
+  
+  --fill-primary: #111111; /* Solid dark button fill */
+  --on-primary: #ffffff; /* Text color on black button */
+  
+  --bg-success: #e2f5e9; /* Soft green */
+  --text-success: #1e8a4a;
+  --bg-warning: #fef3c7; /* Soft amber */
+  --text-warning: #b45309;
+  --bg-accent: #e0f2fe; /* Soft blue */
+  --text-accent: #0369a1;
+  
+  --bg-danger: #fee2e2; /* Soft red */
+  --text-danger: #b91c1c;
 
-  /* Text — off-white primary avoids harsh white-on-black */
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-
-  /* Borders */
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.13);
-  --border-accent: #3b82f6;
-
-  /* Primary fill (buttons, CTAs) */
-  --fill-primary: #f1f5f9;
-  --on-primary: #0c0d10;
-
-  /* Semantic status */
-  --bg-success: rgba(34, 197, 94, 0.12);
-  --text-success: #4ade80;
-  --bg-warning: rgba(245, 158, 11, 0.12);
-  --text-warning: #fbbf24;
-  --bg-accent: rgba(59, 130, 246, 0.12);
-  --text-accent: #60a5fa;
-  --bg-danger: rgba(239, 68, 68, 0.12);
-  --text-danger: #f87171;
-
-  /* Radius scale */
-  --radius-sm: 4px;
-  --radius: 6px;
-  --radius-card: 8px;
-  --radius-lg: 10px;
-
+  --radius: 6px; /* Pixel-perfect compact Apple OS corners */
+  --radius-card: 10px;
+  --radius-pill: 20px;
+  
   --background: var(--surface-2);
   --foreground: var(--text-primary);
 }
@@ -44,18 +39,18 @@
   --color-surface-0: var(--surface-0);
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
-
+  
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
-
+  
   --color-border-custom: var(--border);
   --color-border-strong: var(--border-strong);
   --color-border-accent: var(--border-accent);
-
+  
   --color-fill-primary: var(--fill-primary);
   --color-on-primary: var(--on-primary);
-
+  
   --color-bg-success: var(--bg-success);
   --color-text-success: var(--text-success);
   --color-bg-warning: var(--bg-warning);
@@ -64,30 +59,30 @@
   --color-text-accent: var(--text-accent);
   --color-bg-danger: var(--bg-danger);
   --color-text-danger: var(--text-danger);
-
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  
+  --radius-custom: var(--radius);
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  overflow: hidden;
-  height: 100vh;
-}
-
+/* Custom minimal scrollbar to match Notion's style */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.09);
-  border-radius: 3px;
+  background: #e3e3e3;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: #d0d0d0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }

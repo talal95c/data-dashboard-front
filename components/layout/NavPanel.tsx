@@ -69,15 +69,27 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
   ]
 
   return (
-    <div className={`flex flex-col h-full bg-surface-1/75 backdrop-blur-md border-r border-border-custom py-4 px-2.5 w-[220px] flex-shrink-0 select-none overflow-y-auto ${
+    <div className={`flex flex-col h-full bg-white border-r border-border-custom py-4 px-2.5 w-[220px] flex-shrink-0 select-none overflow-y-auto ${
       isMobileDrawer ? "w-full border-r-0" : ""
     }`}>
       {/* Section 4.2: Source Filters */}
       <div className="mb-6">
-        <h3 className="text-[15px] font-medium text-text-primary px-2 mb-3">
-          Videos
-        </h3>
-        <nav className="flex flex-col gap-1">
+        <div className="flex items-center justify-between px-2 mb-3">
+          <h3 className="text-sm font-semibold text-text-primary">
+            Videos
+          </h3>
+          <div className="flex items-center gap-1.5 text-text-muted">
+            <button 
+              onClick={handleUploadClick}
+              className="hover:text-text-primary p-0.5 cursor-pointer focus:outline-none"
+              title="Add Video"
+            >
+              <TbPlus className="text-sm" />
+            </button>
+          </div>
+        </div>
+
+        <nav className="flex flex-col gap-0.5">
           {sourceItems.map((item) => {
             const Icon = item.icon
             const isActive = sourceFilter === item.id
@@ -86,17 +98,17 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
               <button
                 key={item.id}
                 onClick={() => selectSource(item.id as 'all' | VideoSource)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-100 cursor-pointer ${
+                className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-[12px] font-medium transition-all duration-100 cursor-pointer ${
                   isActive
-                    ? "bg-surface-2 text-text-primary"
-                    : "text-text-secondary hover:bg-surface-2/40 hover:text-text-primary"
+                    ? "bg-[#efefef] text-text-primary font-semibold"
+                    : "text-text-secondary hover:bg-slate-50 hover:text-text-primary"
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <Icon className="text-sm" />
+                  <Icon className="text-xs text-text-secondary" />
                   <span>{item.label}</span>
                 </div>
-                <span className="text-[11px] text-text-muted font-mono bg-surface-0/40 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] text-text-secondary font-mono bg-slate-100 px-1.5 py-0.5 rounded-md border border-slate-200/50">
                   {item.count}
                 </span>
               </button>
@@ -113,7 +125,7 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
         <div className="text-[10px] font-semibold text-text-muted tracking-wider px-2 mb-3 uppercase">
           Status
         </div>
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-col gap-0.5">
           {statusItems.map((item) => {
             const isActive = statusFilter === item.id
 
@@ -121,21 +133,21 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
               <button
                 key={item.id}
                 onClick={() => selectStatus(item.id as 'all' | VideoStatus)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-100 cursor-pointer ${
+                className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-[12px] font-medium transition-all duration-100 cursor-pointer ${
                   isActive
-                    ? "bg-surface-2 text-text-primary"
-                    : "text-text-secondary hover:bg-surface-2/40 hover:text-text-primary"
+                    ? "bg-[#efefef] text-text-primary font-semibold"
+                    : "text-text-secondary hover:bg-slate-50 hover:text-text-primary"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   {item.color ? (
-                    <span className={`w-2 h-2 rounded-full ${item.color}`} />
+                    <span className={`w-1.5 h-1.5 rounded-full ${item.color} opacity-80`} />
                   ) : (
-                    <span className="w-2 h-2 rounded-full bg-transparent border border-text-muted/30" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-transparent border border-text-muted/40" />
                   )}
                   <span>{item.label}</span>
                 </div>
-                <span className="text-[11px] text-text-muted font-mono bg-surface-0/40 px-1.5 py-0.5 rounded">
+                <span className="text-[10px] text-text-secondary font-mono bg-slate-100 px-1.5 py-0.5 rounded-md border border-slate-200/50">
                   {item.count}
                 </span>
               </button>
@@ -148,10 +160,10 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
       <div className="mt-auto pt-4">
         <button
           onClick={handleUploadClick}
-          className="w-full flex items-center justify-center gap-2 border border-border-strong text-text-primary rounded-lg py-2 px-3 text-[13px] font-medium transition-all duration-100 hover:border-text-secondary hover:bg-surface-2 cursor-pointer"
+          className="w-full flex items-center justify-center gap-1.5 border border-border-strong text-text-primary rounded-lg py-2 px-3 text-[12px] font-semibold transition-all duration-100 hover:border-text-secondary hover:bg-slate-50 cursor-pointer shadow-sm active:scale-[0.98]"
         >
           <TbPlus className="text-sm" />
-          <span>Upload a Video</span>
+          <span>Upload Video</span>
         </button>
       </div>
     </div>

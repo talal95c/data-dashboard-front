@@ -155,10 +155,10 @@ export default function AppSidebar() {
           setIsOrgDropdownOpen(false)
           setIsAccountDropdownOpen(false)
         }}
-        className="sidebar fixed left-0 top-0 bottom-0 z-40 h-full shrink-0 border-r border-border-custom bg-surface-0/70 backdrop-blur-md text-text-secondary select-none overflow-hidden flex flex-col"
+        className="sidebar fixed left-0 top-0 bottom-0 z-40 h-full shrink-0 border-r border-border-custom bg-surface-0 text-text-secondary select-none overflow-hidden flex flex-col"
       >
         <motion.div
-          className="relative z-40 flex h-full shrink-0 flex-col bg-surface-0/70 backdrop-blur-md transition-all flex-1"
+          className="relative z-40 flex h-full shrink-0 flex-col bg-surface-0 transition-all flex-1"
           variants={contentVariants}
         >
           <motion.ul variants={staggerVariants} className="flex h-full flex-col p-0 m-0 list-none flex-1">
@@ -271,14 +271,14 @@ export default function AppSidebar() {
                             onClick={() => handleNavClick(item.id)}
                             className={`flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition-colors relative ${
                               item.active 
-                                ? "bg-surface-2 text-text-primary font-semibold" 
-                                : "text-text-secondary hover:bg-surface-2/65 hover:text-text-primary"
+                                ? "bg-[#ebebeb] text-text-primary font-semibold" 
+                                : "text-text-secondary hover:bg-[#efefef]/80 hover:text-text-primary"
                             }`}
                           >
                             {item.active && (
                               <motion.div
                                 layoutId="activeNavIndicator2"
-                                className="absolute inset-0 bg-surface-2 rounded-md -z-10"
+                                className="absolute inset-0 bg-[#ebebeb] rounded-md -z-10"
                                 transition={{ type: "spring", stiffness: 380, damping: 30 }}
                               />
                             )}

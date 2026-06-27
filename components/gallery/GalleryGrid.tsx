@@ -32,6 +32,7 @@ export default function GalleryGrid() {
     setCategoryFilter,
     updateVideoStatus, 
     setGordonStatus, 
+    user,
     addToast 
   } = useGordonStore()
   
@@ -54,10 +55,7 @@ export default function GalleryGrid() {
 
     updateVideoStatus(video.id, "processing")
     setGordonStatus("busy")
-    addToast(`Sent to Gordon RamArm: ${video.title}`, "success")
-    if (selectedVideo?.id === video.id) {
-      setSelectedVideo({ ...video, status: "processing" })
-    }
+    addToast(`Gordon RamArm: Executing action path for ${video.title}`, "info")
 
     setTimeout(() => {
       // Pick a random category on completion if it was generic
@@ -85,12 +83,11 @@ export default function GalleryGrid() {
 
   // Folder categories list configurations
   const categoriesList: { name: GestureCategory; icon: any; color: string }[] = [
-    { name: "Cutting", icon: TbScissors, color: "#f5c4b3" },
-    { name: "Cooking / Searing", icon: TbFlame, color: "#9fe1cb" },
-    { name: "Plating / Dressing", icon: TbStar, color: "#cecbf6" },
-    { name: "Liquids / Deglazing", icon: TbDroplet, color: "#b5d4f4" },
-    { name: "Herbs / Greens", icon: TbLeaf, color: "#c0dd97" },
-    { name: "Generic Upload", icon: TbUpload, color: "#f4c0d1" }
+    { name: "Cutting", icon: TbScissors, color: "#e05b35" },
+    { name: "Cooking / Searing", icon: TbFlame, color: "#10b981" },
+    { name: "Plating / Dressing", icon: TbStar, color: "#6366f1" },
+    { name: "Liquids / Deglazing", icon: TbDroplet, color: "#0ea5e9" },
+    { name: "Herbs / Greens", icon: TbLeaf, color: "#22c55e" }
   ]
 
   // Animations
@@ -108,18 +105,18 @@ export default function GalleryGrid() {
   }
 
   return (
-    <div className="flex-1 w-full h-full flex flex-col p-6 space-y-8 select-none">
+    <div className="flex-1 w-full h-full flex flex-col p-6 space-y-8 select-none bg-white">
       
       {/* 1. Folders Section */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold tracking-wide text-text-primary">
+          <h3 className="text-[13px] font-bold tracking-wide text-text-primary">
             Folders
           </h3>
           {categoryFilter !== "all" && (
             <button 
               onClick={() => setCategoryFilter("all")}
-              className="text-xs text-border-accent hover:underline cursor-pointer"
+              className="text-xs text-slate-500 hover:text-slate-900 hover:underline cursor-pointer"
             >
               Clear filter
             </button>
@@ -130,7 +127,7 @@ export default function GalleryGrid() {
           variants={staggerContainer}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"
         >
           {categoriesList.map((cat) => {
             const count = getCategoryCount(cat.name)
@@ -142,37 +139,37 @@ export default function GalleryGrid() {
                 key={cat.name}
                 variants={slideUp}
                 onClick={() => setCategoryFilter(isActive ? "all" : cat.name)}
-                className={`flex flex-col justify-between p-4 rounded-xl bg-surface-1 border transition-colors duration-150 h-32 text-left cursor-pointer w-full group relative overflow-hidden ${
+                className={`flex flex-col items-center justify-between p-5 rounded-[20px] bg-[#f5f5f5] hover:bg-[#ebebeb] border transition-colors duration-150 h-[145px] text-center cursor-pointer w-full group relative overflow-hidden ${
                   isActive
-                    ? "border-border-accent bg-border-accent/5"
-                    : "border-border-custom hover:border-border-strong"
+                    ? "border-slate-400 shadow-sm"
+                    : "border-slate-200/50 hover:border-slate-300"
                 }`}
               >
-                {/* Folder graphic with sheets popping out */}
-                <div className="relative w-12 h-8 mt-1 select-none">
+                {/* Folder graphic with sheets popping out - Centered */}
+                <div className="relative w-12 h-8 mt-1 select-none flex justify-center items-center">
                   {/* Sheets behind folder */}
-                  <div className="absolute top-0.5 left-2.5 w-6 h-6 bg-surface-0 rounded border border-border-custom flex items-center justify-center text-[7px] text-text-muted font-semibold font-mono transform -rotate-12 group-hover:-translate-y-1 transition-transform">
+                  <div className="absolute top-0.5 left-2.5 w-6 h-6 bg-white rounded border border-slate-200 flex items-center justify-center text-[7px] text-slate-400 font-semibold font-mono transform -rotate-12 group-hover:-translate-y-1 transition-transform">
                     MOV
                   </div>
-                  <div className="absolute top-0 left-2 w-7 h-7 bg-surface-2 rounded border border-border-strong flex items-center justify-center text-[8px] text-text-secondary font-bold font-mono transform rotate-6 group-hover:-translate-y-1.5 transition-transform">
+                  <div className="absolute top-0 left-2 w-7 h-7 bg-white rounded border border-slate-300 flex items-center justify-center text-[8px] text-slate-500 font-bold font-mono transform rotate-6 group-hover:-translate-y-1.5 transition-transform">
                     MP4
                   </div>
                   {/* Folder body */}
-                  <div className="absolute bottom-0 inset-x-0 h-6 bg-surface-0 border-t border-x border-border-custom rounded-t flex items-center px-1.5">
-                    <div style={{ color: cat.color }} className="opacity-80">
-                      <CatIcon className="text-xs" />
+                  <div className="absolute bottom-0 inset-x-0 h-6 bg-slate-300 border-t border-x border-slate-400 rounded-t flex items-center justify-center">
+                    <div style={{ color: cat.color }} className="opacity-90">
+                      <CatIcon className="text-[10px]" />
                     </div>
                   </div>
                   {/* Folder Tab */}
-                  <div className="absolute bottom-5 left-1 w-5 h-1.5 bg-surface-0 border-t border-x border-border-custom rounded-t" />
+                  <div className="absolute bottom-5 left-1 w-5 h-1.5 bg-slate-300 border-t border-x border-slate-400 rounded-t" />
                 </div>
 
-                <div>
-                  <h4 className="text-[12px] font-medium text-text-primary leading-tight truncate w-full" title={cat.name}>
+                <div className="text-center w-full mt-2">
+                  <h4 className="text-[11px] font-bold text-slate-800 leading-tight truncate w-full" title={cat.name}>
                     {cat.name}
                   </h4>
-                  <span className="text-[10px] text-text-muted mt-1 block">
-                    {count} Video{count !== 1 ? "s" : ""}
+                  <span className="text-[10px] text-slate-500 mt-1 block">
+                    {count} File{count !== 1 ? "s" : ""}
                   </span>
                 </div>
               </motion.button>
@@ -183,7 +180,7 @@ export default function GalleryGrid() {
 
       {/* 2. Files Section (List View) */}
       <div className="space-y-3 flex-1 flex flex-col min-h-0">
-        <h3 className="text-sm font-semibold tracking-wide text-text-primary">
+        <h3 className="text-[13px] font-bold tracking-wide text-text-primary">
           Files
         </h3>
 
@@ -192,7 +189,7 @@ export default function GalleryGrid() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center p-12 bg-surface-1 border border-border-custom rounded-xl h-[200px]"
+            className="flex flex-col items-center justify-center p-12 bg-white border border-border-custom rounded-xl h-[200px]"
           >
             <TbVideoOff className="text-2xl text-text-muted mb-2" />
             <p className="text-xs text-text-secondary font-medium">
@@ -201,87 +198,105 @@ export default function GalleryGrid() {
           </motion.div>
         ) : (
           /* Files Table View */
-          <div className="bg-surface-1 border border-border-custom rounded-xl overflow-hidden flex-1 flex flex-col min-h-0">
+          <div className="bg-white border border-border-custom rounded-xl overflow-hidden flex-1 flex flex-col min-h-0 shadow-sm">
             {/* Table Header */}
-            <div className="grid grid-cols-12 px-5 py-3 border-b border-border-custom bg-surface-0/60 text-[10px] font-bold text-text-muted tracking-wider uppercase">
-              <div className="col-span-6">Name</div>
-              <div className="col-span-2">Category</div>
+            <div className="grid grid-cols-12 px-5 py-3 border-b border-border-custom bg-slate-50/50 text-[10px] font-bold text-text-muted tracking-wider uppercase">
+              <div className="col-span-5">Name</div>
+              <div className="col-span-3">Added By</div>
               <div className="col-span-1 text-center">Source</div>
               <div className="col-span-2 text-center">Status</div>
               <div className="col-span-1 text-right">Action</div>
             </div>
 
             {/* Table Rows (scrollable container) */}
-            <div className="flex-1 overflow-y-auto divide-y divide-border-custom/40">
+            <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
               <AnimatePresence>
-                {filteredVideos.map((video) => (
-                  <motion.div
-                    layout
-                    key={video.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={() => setSelectedVideo(video)}
-                    className="grid grid-cols-12 items-center px-5 py-3.5 hover:bg-surface-2/40 cursor-pointer transition-colors text-[13px] group"
-                  >
-                    {/* Name */}
-                    <div className="col-span-6 flex items-center gap-3 pr-2 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-surface-2 border border-border-custom flex items-center justify-center text-text-secondary group-hover:text-text-primary transition-colors flex-shrink-0">
-                        <TbMovie className="text-base" />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="font-semibold text-text-primary block truncate group-hover:text-border-accent transition-colors" title={video.title}>
-                          {video.title}
-                        </span>
-                        <span className="text-[10px] text-text-muted font-mono block mt-0.5">
-                          {video.date} • {video.duration}
-                        </span>
-                      </div>
-                    </div>
+                {filteredVideos.map((video, idx) => {
+                  // Mix contributors to match mockup screenshot
+                  let contributorEmail = user?.email || "chef.gordon@ramarm.ai"
+                  let contributorName = user?.name || "Chef Gordon"
+                  let contributorAvatar = user?.avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=gordon"
 
-                    {/* Category */}
-                    <div className="col-span-2 text-text-secondary truncate pr-2">
-                      {video.category ? (
-                        <span className="bg-surface-2 border border-border-custom text-text-secondary text-[10px] font-medium px-2 py-0.5 rounded tracking-wide">
-                          {video.category}
-                        </span>
-                      ) : (
-                        <span className="text-text-muted">—</span>
-                      )}
-                    </div>
+                  if (idx % 3 === 0) {
+                    contributorEmail = "kevin@mail.com"
+                    contributorName = "Kevin"
+                    contributorAvatar = "https://api.dicebear.com/7.x/adventurer/svg?seed=kevin"
+                  } else if (idx % 3 === 1) {
+                    contributorEmail = "antonwe@gmail.com"
+                    contributorName = "Anton"
+                    contributorAvatar = "https://api.dicebear.com/7.x/adventurer/svg?seed=anton"
+                  }
 
-                    {/* Source */}
-                    <div className="col-span-1 flex justify-center">
-                      <span className="text-text-secondary" title={video.source === "rayban" ? "Ray-Ban Meta" : "Uploaded"}>
-                        {video.source === "rayban" ? (
-                          <TbEye className="text-base text-blue-400" />
+                  return (
+                    <motion.div
+                      layout
+                      key={video.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => setSelectedVideo(video)}
+                      className="grid grid-cols-12 items-center px-5 py-3.5 hover:bg-slate-50 cursor-pointer transition-colors text-[13px] group"
+                    >
+                      {/* Name */}
+                      <div className="col-span-5 flex items-center gap-3 pr-2 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-slate-800 transition-colors flex-shrink-0">
+                          <TbMovie className="text-base" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="font-semibold text-slate-800 block truncate group-hover:text-[#0066cc] transition-colors" title={video.title}>
+                            {video.title}
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-mono block mt-0.5">
+                            {video.duration}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Added By */}
+                      <div className="col-span-3 flex items-center gap-2 pr-2 min-w-0">
+                        <img 
+                          src={contributorAvatar} 
+                          alt={contributorName} 
+                          className="w-5 h-5 rounded-full border border-slate-200 bg-slate-50 flex-shrink-0"
+                        />
+                        <span className="text-[11px] text-slate-600 truncate font-semibold">
+                          {contributorEmail}
+                        </span>
+                      </div>
+
+                      {/* Source */}
+                      <div className="col-span-1 flex justify-center">
+                        <span className="text-slate-500" title={video.source === "rayban" ? "Ray-Ban Meta" : "Uploaded"}>
+                          {video.source === "rayban" ? (
+                            <TbEye className="text-base text-blue-500" />
+                          ) : (
+                            <TbUpload className="text-base text-purple-500" />
+                          )}
+                        </span>
+                      </div>
+
+                      {/* Status */}
+                      <div className="col-span-2 flex justify-center">
+                        <StatusBadge status={video.status} />
+                      </div>
+
+                      {/* Action button on hover */}
+                      <div className="col-span-1 flex justify-end">
+                        {video.status === "analyzed" ? (
+                          <button
+                            onClick={(e) => handleGordonClick(e, video)}
+                            className="opacity-0 group-hover:opacity-100 flex items-center justify-center w-7 h-7 bg-slate-900 text-white rounded-lg transition-all cursor-pointer active:scale-95 hover:bg-slate-800"
+                            title="Send to Gordon Robot"
+                          >
+                            <TbRobot className="text-xs" />
+                          </button>
                         ) : (
-                          <TbUpload className="text-base text-purple-400" />
+                          <span className="text-slate-400 group-hover:hidden">—</span>
                         )}
-                      </span>
-                    </div>
-
-                    {/* Status */}
-                    <div className="col-span-2 flex justify-center">
-                      <StatusBadge status={video.status} />
-                    </div>
-
-                    {/* Action button on hover */}
-                    <div className="col-span-1 flex justify-end">
-                      {video.status === "analyzed" ? (
-                        <button
-                          onClick={(e) => handleGordonClick(e, video)}
-                          className="opacity-0 group-hover:opacity-100 flex items-center justify-center w-8 h-8 bg-fill-primary text-on-primary rounded-lg transition-all cursor-pointer active:scale-95"
-                          title="Send to Gordon Robot"
-                        >
-                          <TbRobot className="text-base" />
-                        </button>
-                      ) : (
-                        <span className="text-text-muted group-hover:hidden">—</span>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
+                      </div>
+                    </motion.div>
+                  )
+                })}
               </AnimatePresence>
             </div>
           </div>
@@ -297,7 +312,7 @@ export default function GalleryGrid() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30"
+              className="fixed inset-0 bg-black/10 backdrop-blur-sm z-30"
               onClick={() => setSelectedVideo(null)}
             />
 

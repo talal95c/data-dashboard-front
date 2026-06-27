@@ -170,7 +170,7 @@ export default function UploadZone() {
             e.stopPropagation()
             setShowUpload(false)
           }}
-          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-lg border border-border-custom bg-surface-2 hover:bg-surface-0 hover:text-white text-text-secondary transition-colors cursor-pointer"
+          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-lg border border-border-custom bg-slate-50 hover:bg-slate-100 hover:text-slate-900 text-slate-500 transition-colors cursor-pointer"
           title="Dismiss"
         >
           <TbX className="text-sm" />

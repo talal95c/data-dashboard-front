@@ -43,26 +43,20 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#07080a] text-white p-4 md:p-8 font-sans relative overflow-hidden select-none">
+    <div className="min-h-screen flex items-center justify-center bg-[#fafafa] text-slate-800 p-4 md:p-8 font-sans relative select-none">
       
-      {/* Background ambient lighting */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-600/5 blur-[130px] opacity-75" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-blue-600/5 blur-[120px] opacity-60" />
-      </div>
-
       <AnimatePresence>
         {errorMessage && (
           <motion.div 
             initial={{ opacity: 0, y: -20, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: -20, x: "-50%" }}
-            className="fixed top-6 left-1/2 transform bg-red-950 border border-red-500/20 text-red-200 px-4 py-3 rounded-xl flex items-center gap-3 shadow-xl z-50 text-xs font-semibold"
+            className="fixed top-6 left-1/2 transform bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-3 shadow-xl z-50 text-xs font-semibold"
           >
             <span>{errorMessage}</span>
             <button 
               onClick={() => setErrorMessage(null)} 
-              className="hover:text-white font-bold ml-2 cursor-pointer focus:outline-none"
+              className="hover:text-red-900 font-bold ml-2 cursor-pointer focus:outline-none"
             >
               ✕
             </button>
@@ -70,39 +64,39 @@ export default function LoginPage() {
         )}
       </AnimatePresence>
 
-      {/* Main Single-Pane Container (Inspired by target mockup) */}
+      {/* Main Container Card (Notion/Apple style: Solid White, Fine shadow, no heavy borders) */}
       <motion.div 
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="w-full max-w-2xl bg-[#0c0d12] rounded-3xl shadow-2xl p-8 md:p-14 relative z-10 border border-white/[0.02]"
+        className="w-full max-w-[420px] bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-8 md:p-10 relative z-10 border border-slate-100"
       >
         {/* Back Button (top left) */}
         <button
           onClick={() => router.push("/")}
-          className="absolute top-6 left-6 flex items-center gap-1 bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 px-3 py-1.5 rounded-lg text-[11px] font-semibold text-slate-300 hover:text-white transition-all cursor-pointer"
+          className="absolute top-6 left-6 flex items-center gap-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md text-[10px] font-bold text-slate-600 hover:text-slate-900 transition-all cursor-pointer"
         >
           <TbChevronLeft className="text-xs" />
           <span>Back</span>
         </button>
 
-        {/* Form Inner Layout */}
-        <div className="max-w-md mx-auto flex flex-col items-center text-center">
+        {/* Form Content */}
+        <div className="flex flex-col items-center w-full mt-4">
           
-          {/* Logo container: concentric spinning circles */}
-          <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center mb-6">
-            <div className="w-7 h-7 rounded-full border-2 border-dashed border-white/40 animate-[spin_30s_linear_infinite] flex items-center justify-center">
-              <div className="w-3.5 h-3.5 rounded-full border border-white/60" />
+          {/* Logo container: Clean spinning concentric ring */}
+          <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-5">
+            <div className="w-6 h-6 rounded-full border border-dashed border-slate-400 animate-[spin_25s_linear_infinite] flex items-center justify-center">
+              <div className="w-2.5 h-2.5 rounded-full border border-slate-600" />
             </div>
           </div>
 
           {/* Heading */}
-          <div className="space-y-1.5 mb-8">
-            <h2 className="text-xl font-bold tracking-tight text-white md:text-2xl">
+          <div className="space-y-1.5 mb-6 text-center">
+            <h2 className="text-lg font-extrabold tracking-tight text-slate-900">
               Yooo, welcome back!
             </h2>
-            <p className="text-xs text-slate-400 font-light">
-              First time here? <span className="text-white font-bold hover:underline cursor-pointer">Sign up for free</span>
+            <p className="text-xs text-slate-500 font-medium">
+              First time here? <span className="text-slate-900 font-bold hover:underline cursor-pointer">Sign up for free</span>
             </p>
           </div>
 
@@ -113,7 +107,7 @@ export default function LoginPage() {
               value={customName}
               onChange={(e) => setCustomName(e.target.value)}
               placeholder="Your name"
-              className="w-full px-4 py-3 bg-[#13141c] border border-white/5 focus:border-white/15 rounded-xl text-xs text-white placeholder-slate-500 font-medium focus:outline-none transition-all"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white focus:ring-1 focus:ring-slate-400 rounded-xl text-xs text-slate-900 placeholder-slate-400 font-medium focus:outline-none transition-all"
             />
 
             <input
@@ -121,7 +115,7 @@ export default function LoginPage() {
               value={customEmail}
               onChange={(e) => setCustomEmail(e.target.value)}
               placeholder="Your email"
-              className="w-full px-4 py-3 bg-[#13141c] border border-white/5 focus:border-white/15 rounded-xl text-xs text-white placeholder-slate-500 font-medium focus:outline-none transition-all"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 focus:border-slate-400 focus:bg-white focus:ring-1 focus:ring-slate-400 rounded-xl text-xs text-slate-900 placeholder-slate-400 font-medium focus:outline-none transition-all"
             />
           </div>
 
@@ -129,10 +123,10 @@ export default function LoginPage() {
           <button
             onClick={() => handleLogin("google")}
             disabled={loadingProvider !== null}
-            className="w-full bg-white text-slate-950 font-bold text-xs py-3 rounded-xl hover:opacity-90 active:scale-[0.99] transition-all cursor-pointer shadow-md select-none mb-3.5 disabled:opacity-50"
+            className="w-full bg-slate-950 hover:bg-slate-900 text-white font-bold text-xs py-2.5 rounded-xl active:scale-[0.99] transition-all cursor-pointer shadow-sm select-none mb-3.5 disabled:opacity-50"
           >
             {loadingProvider !== null ? (
-              <TbLoader2 className="text-base text-slate-950 animate-spin" />
+              <TbLoader2 className="text-base text-white animate-spin mx-auto" />
             ) : (
               <span>Sign in</span>
             )}
@@ -141,30 +135,30 @@ export default function LoginPage() {
           {/* Magic link link */}
           <button
             onClick={() => handleLogin("google")}
-            className="text-[11px] text-slate-400 hover:text-white font-medium transition-colors cursor-pointer bg-transparent border-none"
+            className="text-[11px] text-slate-500 hover:text-slate-950 font-bold transition-colors cursor-pointer bg-transparent border-none"
           >
             Sign in using magic link
           </button>
 
           {/* Divider */}
-          <div className="relative w-full flex items-center justify-center my-6">
-            <div className="absolute inset-x-0 h-[1px] bg-white/5" />
-            <span className="relative z-10 px-3 bg-[#0c0d12] text-[9px] text-slate-500 font-bold uppercase tracking-widest">
+          <div className="relative w-full flex items-center justify-center my-5">
+            <div className="absolute inset-x-0 h-[1px] bg-slate-100" />
+            <span className="relative z-10 px-3 bg-white text-[9px] text-slate-400 font-bold uppercase tracking-widest">
               or
             </span>
           </div>
 
-          {/* Side-by-side SSO custom styled buttons */}
-          <div className="w-full grid grid-cols-2 gap-3 mb-8">
+          {/* Stacked Google & Facebook Buttons */}
+          <div className="w-full space-y-2 mb-6">
             <button
               onClick={() => handleLogin("google")}
               disabled={loadingProvider !== null}
-              className="flex items-center justify-center gap-2 border border-white/5 hover:border-white/15 bg-white/[0.02] text-white py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer hover:bg-white/[0.04] active:scale-[0.99]"
+              className="w-full flex items-center justify-center gap-2 border border-slate-200 hover:bg-slate-50 text-slate-700 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-sm hover:border-slate-300 active:scale-[0.99]"
             >
               {loadingProvider === "google" ? (
-                <TbLoader2 className="text-xs text-blue-400 animate-spin" />
+                <TbLoader2 className="text-xs text-blue-500 animate-spin" />
               ) : (
-                <TbBrandGoogle className="text-xs text-white/80" />
+                <TbBrandGoogle className="text-xs text-slate-500" />
               )}
               <span>Sign in with Google</span>
             </button>
@@ -172,23 +166,23 @@ export default function LoginPage() {
             <button
               onClick={() => handleLogin("facebook")}
               disabled={loadingProvider !== null}
-              className="flex items-center justify-center gap-2 border border-white/5 hover:border-white/15 bg-white/[0.02] text-white py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer hover:bg-white/[0.04] active:scale-[0.99]"
+              className="w-full flex items-center justify-center gap-2 border border-slate-200 hover:bg-slate-50 text-slate-700 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-sm hover:border-slate-300 active:scale-[0.99]"
             >
               {loadingProvider === "facebook" ? (
-                <TbLoader2 className="text-xs text-blue-400 animate-spin" />
+                <TbLoader2 className="text-xs text-blue-500 animate-spin" />
               ) : (
-                <TbBrandFacebook className="text-xs text-white/80" />
+                <TbBrandFacebook className="text-xs text-slate-500" />
               )}
               <span>Sign in with Facebook</span>
             </button>
           </div>
 
           {/* Legal notes */}
-          <div className="text-[10px] text-slate-500 leading-relaxed max-w-xs">
+          <div className="text-[10px] text-slate-400 leading-relaxed text-center">
             You acknowledge that you read, and agree, to our{" "}
-            <a href="#" className="text-slate-400 underline hover:text-white transition-colors">Terms of Service</a>{" "}
+            <a href="#" className="text-slate-500 underline hover:text-slate-800 transition-colors">Terms of Service</a>{" "}
             and our{" "}
-            <a href="#" className="text-slate-400 underline hover:text-white transition-colors">Privacy Policy</a>.
+            <a href="#" className="text-slate-500 underline hover:text-slate-800 transition-colors">Privacy Policy</a>.
           </div>
 
         </div>
