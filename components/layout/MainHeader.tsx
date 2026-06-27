@@ -56,7 +56,7 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
   const displayAvatar = user?.avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=gordon"
 
   return (
-    <header className="sticky top-0 z-10 bg-white border-b border-border-custom px-6 py-3.5 flex items-center justify-between select-none h-[58px]">
+    <header className="sticky top-0 z-40 bg-white border-b border-border-custom px-6 py-3.5 flex items-center justify-between select-none h-[58px]">
       {/* Left side: Mobile menu toggle + dynamic title with chevron dropdown (mock) */}
       <div className="flex items-center gap-3">
         {onToggleMobileFilters && (

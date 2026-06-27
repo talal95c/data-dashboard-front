@@ -17,7 +17,6 @@ import {
   TbStar,
   TbDroplet,
   TbEye,
-  TbDeviceGlasses,
   TbDatabase,
   TbVector,
   TbSparkles
