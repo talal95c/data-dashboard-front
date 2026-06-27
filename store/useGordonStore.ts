@@ -19,6 +19,7 @@ interface GordonStore {
   activeNav: string;
   gordonStatus: 'online' | 'offline' | 'busy';
   toasts: { id: string; type: 'success' | 'error' | 'info'; text: string }[];
+  searchQuery: string;
   
   // Actions
   setUser: (user: User | null) => void;
@@ -34,6 +35,7 @@ interface GordonStore {
   setGordonStatus: (status: 'online' | 'offline' | 'busy') => void;
   addToast: (text: string, type?: 'success' | 'error' | 'info') => void;
   removeToast: (id: string) => void;
+  setSearchQuery: (query: string) => void;
 }
 
 const mockVideos: Video[] = [
@@ -116,6 +118,7 @@ export const useGordonStore = create<GordonStore>((set) => ({
   activeNav: 'gallery',
   gordonStatus: 'online',
   toasts: [],
+  searchQuery: '',
 
   setUser: (user) => set({ user }),
   setAccessToken: (accessToken) => set({ accessToken }),
@@ -149,4 +152,5 @@ export const useGordonStore = create<GordonStore>((set) => ({
   removeToast: (id) => set((state) => ({
     toasts: state.toasts.filter((t) => t.id !== id)
   })),
+  setSearchQuery: (searchQuery) => set({ searchQuery }),
 }))

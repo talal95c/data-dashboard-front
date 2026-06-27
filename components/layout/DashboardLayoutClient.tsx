@@ -55,12 +55,12 @@ export default function DashboardLayoutClient({
       </div>
 
       {/* 3. Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 h-full relative pb-16 md:pb-0">
+      <div className="flex-1 flex flex-col min-w-0 h-full relative pb-16 md:pb-0 bg-white">
         {/* Main Header */}
         <MainHeader onToggleMobileFilters={() => setMobileFiltersOpen(!mobileFiltersOpen)} />
 
         {/* Dynamic sub-page container with isolated vertical scroll */}
-        <main className="flex-1 overflow-y-auto relative">
+        <main className="flex-1 overflow-y-auto relative bg-[#fafafa] bg-grid-pattern">
           {children}
         </main>
       </div>

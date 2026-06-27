@@ -33,17 +33,21 @@ export default function GalleryGrid() {
     updateVideoStatus, 
     setGordonStatus, 
     user,
-    addToast 
+    addToast,
+    searchQuery
   } = useGordonStore()
   
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
 
-  // Filter video listing based on active source/status/category selectors
+  // Filter video listing based on active source/status/category/search selectors
   const filteredVideos = videos.filter((video) => {
     const matchesSource = sourceFilter === "all" || video.source === sourceFilter
     const matchesStatus = statusFilter === "all" || video.status === statusFilter
     const matchesCategory = categoryFilter === "all" || video.category === categoryFilter
-    return matchesSource && matchesStatus && matchesCategory
+    const matchesSearch = searchQuery.trim() === "" || 
+      video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (video.category && video.category.toLowerCase().includes(searchQuery.toLowerCase()))
+    return matchesSource && matchesStatus && matchesCategory && matchesSearch
   })
 
   const getCategoryCount = (category: GestureCategory) => {
@@ -105,7 +109,7 @@ export default function GalleryGrid() {
   }
 
   return (
-    <div className="flex-1 w-full h-full flex flex-col p-6 space-y-8 select-none bg-white">
+    <div className="flex-1 w-full h-full flex flex-col p-6 space-y-8 select-none bg-transparent">
       
       {/* 1. Folders Section */}
       <div className="space-y-3">
@@ -139,29 +143,24 @@ export default function GalleryGrid() {
                 key={cat.name}
                 variants={slideUp}
                 onClick={() => setCategoryFilter(isActive ? "all" : cat.name)}
-                className={`flex flex-col items-center justify-between p-5 rounded-[20px] bg-[#f5f5f5] hover:bg-[#ebebeb] border transition-colors duration-150 h-[145px] text-center cursor-pointer w-full group relative overflow-hidden ${
+                className={`flex flex-col items-center justify-between p-5 rounded-[20px] bg-[#fafafb] hover:bg-[#efefef]/60 border transition-all duration-150 h-[145px] text-center cursor-pointer w-full group relative overflow-hidden ${
                   isActive
-                    ? "border-slate-400 shadow-sm"
+                    ? "border-slate-400 shadow-sm bg-white"
                     : "border-slate-200/50 hover:border-slate-300"
                 }`}
               >
-                {/* Folder graphic with sheets popping out - Centered */}
-                <div className="relative w-12 h-8 mt-1 select-none flex justify-center items-center">
-                  {/* Sheets behind folder */}
-                  <div className="absolute top-0.5 left-2.5 w-6 h-6 bg-white rounded border border-slate-200 flex items-center justify-center text-[7px] text-slate-400 font-semibold font-mono transform -rotate-12 group-hover:-translate-y-1 transition-transform">
-                    MOV
+                {/* Apple-style shiny blue 3D folder graphic - Centered */}
+                <div className="relative w-16 h-11 select-none flex justify-center items-center mx-auto mt-1">
+                  {/* Rear tab background */}
+                  <div className="absolute top-0 left-2 w-12 h-9 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg shadow-sm border-t border-blue-300" />
+                  
+                  {/* Front tab face overlay */}
+                  <div className="absolute bottom-0 left-1 w-[52px] h-[31px] bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg border-t border-blue-400 shadow-md flex items-end px-1.5 pb-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-300/40" />
                   </div>
-                  <div className="absolute top-0 left-2 w-7 h-7 bg-white rounded border border-slate-300 flex items-center justify-center text-[8px] text-slate-500 font-bold font-mono transform rotate-6 group-hover:-translate-y-1.5 transition-transform">
-                    MP4
-                  </div>
-                  {/* Folder body */}
-                  <div className="absolute bottom-0 inset-x-0 h-6 bg-slate-300 border-t border-x border-slate-400 rounded-t flex items-center justify-center">
-                    <div style={{ color: cat.color }} className="opacity-90">
-                      <CatIcon className="text-[10px]" />
-                    </div>
-                  </div>
-                  {/* Folder Tab */}
-                  <div className="absolute bottom-5 left-1 w-5 h-1.5 bg-slate-300 border-t border-x border-slate-400 rounded-t" />
+                  
+                  {/* Folder Tab back */}
+                  <div className="absolute top-[-1px] left-2.5 w-5 h-1.5 bg-blue-400 rounded-t-sm" />
                 </div>
 
                 <div className="text-center w-full mt-2">
@@ -233,9 +232,11 @@ export default function GalleryGrid() {
                       key={video.id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
+                      whileHover={{ x: 2, backgroundColor: "#fafafb" }}
+                      transition={{ type: "spring", stiffness: 350, damping: 26 }}
                       exit={{ opacity: 0 }}
                       onClick={() => setSelectedVideo(video)}
-                      className="grid grid-cols-12 items-center px-5 py-3.5 hover:bg-slate-50 cursor-pointer transition-colors text-[13px] group"
+                      className="grid grid-cols-12 items-center px-5 py-3.5 border-b border-slate-100/50 cursor-pointer text-[13px] group transition-colors duration-100"
                     >
                       {/* Name */}
                       <div className="col-span-5 flex items-center gap-3 pr-2 min-w-0">
@@ -291,7 +292,7 @@ export default function GalleryGrid() {
                             <TbRobot className="text-xs" />
                           </button>
                         ) : (
-                          <span className="text-slate-400 group-hover:hidden">—</span>
+                          <span className="text-slate-400 group-hover:hidden font-mono">—</span>
                         )}
                       </div>
                     </motion.div>
@@ -322,16 +323,16 @@ export default function GalleryGrid() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
-              className="fixed top-0 bottom-0 right-0 w-full sm:w-[420px] bg-surface-1 border-l border-border-custom z-40 flex flex-col"
+              className="fixed top-0 bottom-0 right-0 w-full sm:w-[420px] bg-white border-l border-border-custom z-40 flex flex-col"
             >
               {/* Header */}
-              <div className="p-4 border-b border-border-custom flex items-center justify-between bg-surface-0">
+              <div className="p-4 border-b border-border-custom flex items-center justify-between bg-[#f7f7f5]">
                 <h3 className="text-sm font-semibold text-text-primary truncate max-w-[80%]">
                   Video Details
                 </h3>
                 <button 
                   onClick={() => setSelectedVideo(null)}
-                  className="w-8 h-8 flex items-center justify-center border border-border-custom rounded hover:bg-surface-2 text-text-primary cursor-pointer transition-colors"
+                  className="w-8 h-8 flex items-center justify-center border border-border-custom rounded hover:bg-white text-text-primary cursor-pointer transition-colors"
                   title="Close"
                 >
                   <TbX className="text-lg" />
@@ -341,7 +342,7 @@ export default function GalleryGrid() {
               {/* Content Body */}
               <div className="flex-1 overflow-y-auto p-5 space-y-6">
                 {/* HTML5 Video Player or Preview Area */}
-                <div className="aspect-video w-full rounded-xl bg-surface-0 border border-border-strong flex flex-col items-center justify-center relative overflow-hidden group shadow-inner">
+                <div className="aspect-video w-full rounded-xl bg-[#f7f7f5] border border-border-strong flex flex-col items-center justify-center relative overflow-hidden group shadow-inner">
                   {selectedVideo.thumbnailUrl ? (
                     <video 
                       src={selectedVideo.thumbnailUrl} 
@@ -351,7 +352,7 @@ export default function GalleryGrid() {
                   ) : (
                     <>
                       {selectedVideo.category && (
-                        <div className="absolute bottom-0 inset-x-0 px-4 py-3 bg-surface-0/80 border-t border-border-custom z-10">
+                        <div className="absolute bottom-0 inset-x-0 px-4 py-3 bg-[#f7f7f5]/80 border-t border-border-custom z-10">
                           <span className="text-[10px] font-medium text-text-muted uppercase tracking-wide block">
                             Detected Category
                           </span>
@@ -378,69 +379,30 @@ export default function GalleryGrid() {
                   </h2>
                   <div className="flex items-center gap-2">
                     <StatusBadge status={selectedVideo.status} />
-                    {selectedVideo.category && (
-                      <span className="bg-surface-2 border border-border-custom text-text-secondary text-[10px] font-medium px-2 py-0.5 rounded tracking-wide tracking-wide">
-                        {selectedVideo.category}
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                {/* Data Meta Grid */}
-                <div className="bg-surface-2 border border-border-custom rounded-xl p-4 space-y-3 text-[13px]">
-                  <div className="flex items-center justify-between text-text-secondary">
-                    <div className="flex items-center gap-2">
-                      <TbEye className="text-sm text-text-muted" />
-                      <span>Source</span>
-                    </div>
-                    <span className="font-semibold text-text-primary capitalize">
-                      {selectedVideo.source === "rayban" ? "Ray-Ban Meta Glasses" : "Manual Upload"}
-                    </span>
+                {/* Meta details list */}
+                <div className="bg-[#fafafb] border border-border-custom rounded-xl p-4 space-y-3 text-[12px]">
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary font-medium">Source</span>
+                    <span className="font-semibold text-text-primary capitalize">{selectedVideo.source}</span>
                   </div>
-
-                  <div className="flex items-center justify-between text-text-secondary">
-                    <div className="flex items-center gap-2">
-                      <TbClock className="text-sm text-text-muted" />
-                      <span>Duration</span>
-                    </div>
-                    <span className="font-mono font-semibold text-text-primary">
-                      {selectedVideo.duration}
-                    </span>
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary font-medium">Date Created</span>
+                    <span className="font-semibold text-text-primary">{selectedVideo.date}</span>
                   </div>
-
-                  <div className="flex items-center justify-between text-text-secondary">
-                    <div className="flex items-center gap-2">
-                      <TbCalendar className="text-sm text-text-muted" />
-                      <span>Recorded Date</span>
-                    </div>
-                    <span className="font-semibold text-text-primary">
-                      {selectedVideo.date}
-                    </span>
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary font-medium">Video Duration</span>
+                    <span className="font-semibold text-text-primary">{selectedVideo.duration}</span>
                   </div>
-
-                  {selectedVideo.metaId && (
-                    <div className="flex items-center justify-between text-text-secondary">
-                      <div className="flex items-center gap-2">
-                        <TbCpu className="text-sm text-text-muted" />
-                        <span>Meta API ID</span>
-                      </div>
-                      <span className="font-mono text-[11px] text-text-muted bg-surface-0 px-2 py-0.5 rounded">
-                        {selectedVideo.metaId}
-                      </span>
+                  {selectedVideo.category && (
+                    <div className="flex justify-between">
+                      <span className="text-text-secondary font-medium">Gesture Category</span>
+                      <span className="font-semibold text-text-primary">{selectedVideo.category}</span>
                     </div>
                   )}
                 </div>
-
-                {/* Action: Send to Gordon robot */}
-                {selectedVideo.status === "analyzed" && (
-                  <button
-                    onClick={(e) => handleGordonClick(e, selectedVideo)}
-                    className="w-full flex items-center justify-center gap-2 bg-fill-primary text-on-primary font-semibold text-[13px] py-3 rounded-lg hover:opacity-90 transition-opacity cursor-pointer select-none"
-                  >
-                    <TbRobot className="text-base" />
-                    <span>Send to Gordon RamArm</span>
-                  </button>
-                )}
               </div>
             </motion.div>
           </>
