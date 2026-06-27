@@ -8,51 +8,53 @@ export default function ToastContainer() {
   const { toasts, removeToast } = useGordonStore()
 
   return (
-    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm pointer-events-none select-none">
+    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 w-full max-w-[340px] pointer-events-none select-none">
       <AnimatePresence>
         {toasts.map((toast) => {
           const isSuccess = toast.type === "success"
           const isError = toast.type === "error"
-          
+
+          const accentColor = isSuccess
+            ? "bg-green-500"
+            : isError
+            ? "bg-red-400"
+            : "bg-border-accent"
+
+          const Icon = isSuccess ? TbCheck : isError ? TbAlertTriangle : TbInfoCircle
+
+          const iconColor = isSuccess
+            ? "text-green-600"
+            : isError
+            ? "text-red-500"
+            : "text-text-accent"
+
           return (
             <motion.div
               key={toast.id}
-              initial={{ opacity: 0, y: -12, scale: 0.97 }}
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 320, damping: 28 }}
-              className={`pointer-events-auto flex items-center justify-between gap-3 p-3.5 rounded-lg border shadow-lg ${
-                isSuccess
-                  ? "bg-[#102a18]/90 border-green-500/30 text-green-200"
-                  : isError
-                  ? "bg-[#3a1010]/90 border-red-500/30 text-red-200"
-                  : "bg-[#101b2a]/90 border-blue-500/30 text-blue-200"
-              }`}
+              exit={{ opacity: 0, y: -6, scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 340, damping: 30 }}
+              className="pointer-events-auto flex items-start gap-3 bg-white border border-border-custom rounded-xl overflow-hidden"
+              style={{ boxShadow: "var(--shadow-float)" }}
             >
-              <div className="flex items-center gap-2.5">
-                {isSuccess && (
-                  <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
-                    <TbCheck className="text-xs stroke-[3]" />
-                  </div>
-                )}
-                {isError && (
-                  <div className="w-5 h-5 rounded-full bg-red-500/20 flex items-center justify-center text-red-400">
-                    <TbAlertTriangle className="text-xs stroke-[3]" />
-                  </div>
-                )}
-                {!isSuccess && !isError && (
-                  <div className="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                    <TbInfoCircle className="text-xs stroke-[3]" />
-                  </div>
-                )}
-                <span className="text-[13px] font-medium leading-relaxed">
-                  {toast.text}
-                </span>
+              {/* Left accent strip */}
+              <div className={`w-1 self-stretch shrink-0 ${accentColor}`} />
+
+              {/* Icon */}
+              <div className={`mt-3.5 shrink-0 ${iconColor}`}>
+                <Icon className="text-base" />
               </div>
-              
+
+              {/* Message */}
+              <span className="flex-1 text-[13px] text-text-primary font-medium leading-relaxed py-3 pr-1">
+                {toast.text}
+              </span>
+
+              {/* Dismiss */}
               <button
                 onClick={() => removeToast(toast.id)}
-                className="text-text-muted hover:text-text-primary transition-colors cursor-pointer ml-2"
+                className="mt-3 mr-3 text-text-muted hover:text-text-primary transition-colors cursor-pointer shrink-0"
                 title="Dismiss"
               >
                 <TbX className="text-sm" />

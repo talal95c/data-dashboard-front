@@ -63,9 +63,9 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
 
   const statusItems = [
     { id: "all", label: "All", color: null, count: totalCount },
-    { id: "analyzed", label: "Analyzed", color: "bg-green-500", count: getStatusCount("analyzed") },
-    { id: "pending", label: "Pending", color: "bg-amber-500", count: getStatusCount("pending") },
-    { id: "processing", label: "Processing", color: "bg-blue-500", count: getStatusCount("processing") }
+    { id: "analyzed", label: "Analyzed", color: "bg-green-400/70", count: getStatusCount("analyzed") },
+    { id: "pending", label: "Pending", color: "bg-amber-400/70", count: getStatusCount("pending") },
+    { id: "processing", label: "Processing", color: "bg-blue-400/70", count: getStatusCount("processing") }
   ]
 
   return (
@@ -108,7 +108,7 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
                   <Icon className="text-xs text-text-secondary" />
                   <span>{item.label}</span>
                 </div>
-                <span className="text-[10px] text-text-secondary font-mono bg-slate-100 px-1.5 py-0.5 rounded-md border border-slate-200/50">
+                <span className="text-[10px] text-text-muted font-mono bg-slate-100 px-1.5 py-0.5 rounded-md">
                   {item.count}
                 </span>
               </button>
@@ -122,7 +122,7 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
 
       {/* Section 4.3: Status Filters */}
       <div className="mb-6">
-        <div className="text-[10px] font-semibold text-text-muted tracking-wider px-2 mb-3 uppercase">
+        <div className="text-[10px] font-medium text-text-muted tracking-wider px-2 mb-3 uppercase">
           Status
         </div>
         <nav className="flex flex-col gap-0.5">
@@ -147,7 +147,7 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
                   )}
                   <span>{item.label}</span>
                 </div>
-                <span className="text-[10px] text-text-secondary font-mono bg-slate-100 px-1.5 py-0.5 rounded-md border border-slate-200/50">
+                <span className="text-[10px] text-text-muted font-mono bg-slate-100 px-1.5 py-0.5 rounded-md">
                   {item.count}
                 </span>
               </button>

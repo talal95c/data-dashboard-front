@@ -172,7 +172,7 @@ export default function AppSidebar() {
                       onClick={() => setIsOrgDropdownOpen(!isOrgDropdownOpen)}
                       className="flex w-full items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-surface-2 text-text-primary transition-colors cursor-pointer text-left focus:outline-none"
                     >
-                      <div className="w-5 h-5 rounded-md bg-bg-danger flex items-center justify-center text-[11px] font-bold text-white shrink-0">
+                      <div className="w-5 h-5 rounded-md bg-[#111111] flex items-center justify-center text-[11px] font-bold text-white shrink-0">
                         G
                       </div>
                       
@@ -305,8 +305,8 @@ export default function AppSidebar() {
                     href="/dashboard/settings"
                     className={`flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition-colors ${
                       pathname === "/dashboard/settings"
-                        ? "bg-surface-2 text-text-primary font-semibold"
-                        : "text-text-secondary hover:bg-surface-2/65 hover:text-text-primary"
+                        ? "bg-[#ebebeb] text-text-primary font-semibold"
+                        : "text-text-secondary hover:bg-[#efefef]/80 hover:text-text-primary"
                     }`}
                   >
                     <TbSettings className="h-4 w-4 shrink-0" />
@@ -407,7 +407,7 @@ export default function AppSidebar() {
       {/* Mobile Bottom Navigation Bar (< 768px - unaffected by hover states) */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-0 border-t border-border-custom flex items-center justify-around px-4 z-40 shadow-lg">
         {/* Logo indicator */}
-        <div className="w-[30px] h-[30px] bg-bg-danger rounded-lg flex items-center justify-center">
+        <div className="w-[30px] h-[30px] bg-[#111111] rounded-lg flex items-center justify-center">
           <TbRobot className="text-[15px] text-white" />
         </div>
 

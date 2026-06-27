@@ -30,7 +30,11 @@
   --radius: 6px; /* Pixel-perfect compact Apple OS corners */
   --radius-card: 10px;
   --radius-pill: 20px;
-  
+
+  /* macOS-style diffuse shadows — only for floating elements (dropdowns, drawers, toasts) */
+  --shadow-float: 0 4px 24px -4px rgba(0, 0, 0, 0.10), 0 1px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-dropdown: 0 8px 32px -8px rgba(0, 0, 0, 0.12), 0 2px 8px -2px rgba(0, 0, 0, 0.07);
+
   --background: var(--surface-2);
   --foreground: var(--text-primary);
 }
@@ -63,12 +67,15 @@
   --radius-custom: var(--radius);
   --radius-card: var(--radius-card);
   --radius-pill: var(--radius-pill);
+
+  --shadow-float: var(--shadow-float);
+  --shadow-dropdown: var(--shadow-dropdown);
 }
 
 /* Custom minimal scrollbar to match Notion's style */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;

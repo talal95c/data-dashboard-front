@@ -1,6 +1,6 @@
 "use client"
 
-import { TbUpload, TbMenu, TbChevronDown, TbSettings, TbSearch, TbBell } from "react-icons/tb"
+import { TbUpload, TbMenu, TbChevronDown, TbSearch, TbBell } from "react-icons/tb"
 import { useGordonStore } from "@/store/useGordonStore"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -12,10 +12,7 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
   const router = useRouter()
   const pathname = usePathname()
   const {
-    videos,
     sourceFilter,
-    statusFilter,
-    gordonStatus,
     user,
     setShowUpload
   } = useGordonStore()
@@ -27,13 +24,6 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
   } else if (sourceFilter === "uploaded") {
     title = "Uploaded Videos"
   }
-
-  // Count active videos after filters are applied
-  const filteredVideosCount = videos.filter((v) => {
-    const matchesSource = sourceFilter === "all" || v.source === sourceFilter
-    const matchesStatus = statusFilter === "all" || v.status === statusFilter
-    return matchesSource && matchesStatus
-  }).length
 
   const handleUploadClick = () => {
     setShowUpload(true)
@@ -75,24 +65,8 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
       {/* Right side: Circular controls + Profile switcher (Notion/Apple style) */}
       <div className="flex items-center gap-2.5">
         
-        {/* User profile card switcher */}
-        <div 
-          onClick={() => router.push("/dashboard/settings")}
-          className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 rounded-lg p-[4px_8px] shadow-sm cursor-pointer transition-colors"
-        >
-          <img 
-            src={displayAvatar} 
-            alt="Avatar" 
-            className="w-4 h-4 rounded-md object-cover border border-slate-200/50 bg-slate-100"
-          />
-          <span className="text-[11px] font-bold text-slate-700 leading-none truncate max-w-[80px]">
-            {displayName}
-          </span>
-          <TbChevronDown className="text-[9px] text-slate-400" />
-        </div>
-
         {/* Circular search button */}
-        <button 
+        <button
           onClick={() => router.push("/dashboard/gallery")}
           className="w-7 h-7 rounded-full border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 flex items-center justify-center cursor-pointer transition-colors"
           title="Search Videos"
@@ -102,30 +76,37 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
 
         {/* Circular notifications button */}
         <div className="relative">
-          <button 
+          <button
             className="w-7 h-7 rounded-full border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 flex items-center justify-center cursor-pointer transition-colors"
             title="Notifications"
           >
             <TbBell className="text-xs" />
           </button>
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-red-500 ring-2 ring-white" />
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-red-400 ring-[1.5px] ring-white" />
         </div>
-
-        {/* Circular settings button */}
-        <button 
-          onClick={() => router.push("/dashboard/settings")}
-          className="w-7 h-7 rounded-full border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 flex items-center justify-center cursor-pointer transition-colors"
-          title="Settings"
-        >
-          <TbSettings className="text-xs" />
-        </button>
 
         <div className="h-4 w-[1px] bg-slate-200 mx-0.5" />
 
-        {/* Upload Button */}
+        {/* User profile card — flat, no shadow */}
+        <div
+          onClick={() => router.push("/dashboard/settings")}
+          className="flex items-center gap-2 border border-slate-200 bg-white hover:bg-slate-50 rounded-lg p-[4px_8px] cursor-pointer transition-colors"
+        >
+          <img
+            src={displayAvatar}
+            alt="Avatar"
+            className="w-4 h-4 rounded-md object-cover border border-slate-200/50 bg-slate-100"
+          />
+          <span className="text-[11px] font-semibold text-slate-700 leading-none truncate max-w-[80px]">
+            {displayName}
+          </span>
+          <TbChevronDown className="text-[9px] text-slate-400" />
+        </div>
+
+        {/* Upload — primary CTA */}
         <button
           onClick={handleUploadClick}
-          className="flex items-center gap-1 bg-slate-950 text-white font-bold text-[11px] rounded-lg py-1.5 px-3 hover:bg-slate-900 cursor-pointer shadow-sm active:scale-[0.98] transition-all"
+          className="flex items-center gap-1 bg-slate-950 text-white font-semibold text-[11px] rounded-lg py-1.5 px-3 hover:bg-slate-800 cursor-pointer active:scale-[0.98] transition-all"
         >
           <TbUpload className="text-[11px] stroke-[2.5]" />
           <span>Upload</span>
