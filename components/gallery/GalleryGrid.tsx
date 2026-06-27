@@ -24,17 +24,18 @@ import {
 } from "react-icons/tb"
 
 export default function GalleryGrid() {
-  const { 
-    videos, 
-    sourceFilter, 
-    statusFilter, 
-    categoryFilter, 
+  const {
+    videos,
+    sourceFilter,
+    statusFilter,
+    categoryFilter,
     setCategoryFilter,
-    updateVideoStatus, 
-    setGordonStatus, 
+    updateVideoStatus,
+    setGordonStatus,
     user,
     addToast,
-    searchQuery
+    searchQuery,
+    setShowUpload
   } = useGordonStore()
   
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
@@ -216,17 +217,29 @@ export default function GalleryGrid() {
         </h3>
 
         {filteredVideos.length === 0 ? (
-          /* Empty state */
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center p-12 bg-white border border-border-custom rounded-xl h-[200px]"
+          <motion.button
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            onClick={() => setShowUpload(true)}
+            className="w-full h-[200px] rounded-2xl border border-dashed border-slate-200 bg-white hover:bg-slate-50/60 hover:border-slate-300 transition-all duration-200 cursor-pointer group flex flex-col items-center justify-center gap-3 outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
           >
-            <TbVideoOff className="text-2xl text-text-muted mb-2" />
-            <p className="text-xs text-text-secondary font-medium">
-              No files found matching criteria.
-            </p>
-          </motion.div>
+            <motion.div
+              className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:bg-slate-100 group-hover:border-slate-300 transition-all duration-200"
+              whileHover={{ rotate: -4, scale: 1.08 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            >
+              <TbUpload className="text-[18px] text-slate-400 group-hover:text-slate-600 transition-colors duration-200" />
+            </motion.div>
+            <div className="space-y-1 text-center">
+              <p className="text-[12px] font-semibold text-slate-600 group-hover:text-slate-800 transition-colors duration-200">
+                Déposer vos vidéos ici
+              </p>
+              <p className="text-[10px] text-slate-400 font-medium">
+                MP4 · MOV · 500 MB max
+              </p>
+            </div>
+          </motion.button>
         ) : (
           /* Files Table View */
           <div className="bg-white border border-border-custom rounded-xl overflow-hidden flex-1 flex flex-col min-h-0 shadow-sm">

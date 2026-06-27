@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import { useGordonStore } from "@/store/useGordonStore"
 import { TbUpload, TbX, TbLoader2 } from "react-icons/tb"
 import { Video } from "@/types/video"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function UploadZone() {
   const { addVideo, setShowUpload, addToast } = useGordonStore()
@@ -135,12 +135,7 @@ export default function UploadZone() {
   }, [])
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      id="upload-dropzone" 
-      className="p-[18px_18px_0_18px] select-none relative"
-    >
+    <div className="fixed inset-0 bg-slate-950/20 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={() => setShowUpload(false)}>
       <input
         ref={fileInputRef}
         type="file"
@@ -151,61 +146,79 @@ export default function UploadZone() {
       />
 
       <motion.div
-        onDragEnter={handleDrag}
-        onDragOver={handleDrag}
-        onDragLeave={handleDrag}
-        onDrop={handleDrop}
-        onClick={onButtonClick}
-        animate={{ scale: isDragActive ? 1.01 : 1 }}
-        transition={{ type: "spring", stiffness: 350, damping: 25 }}
-        className={`relative flex flex-col items-center justify-center rounded-lg p-7 text-center border transition-all duration-150 cursor-pointer ${
-          isDragActive
-            ? "border-border-accent bg-bg-accent/40"
-            : "border-dashed border-border-strong bg-surface-1 hover:border-text-secondary"
-        }`}
+        initial={{ scale: 0.96, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.96, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 380, damping: 28 }}
+        className="bg-white border border-slate-200/80 rounded-[22px] p-6 shadow-xl w-full max-w-[420px] relative overflow-hidden select-none space-y-4 text-center"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
-          onClick={(e) => {
-            e.stopPropagation()
-            setShowUpload(false)
-          }}
-          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-lg border border-border-custom bg-slate-50 hover:bg-slate-100 hover:text-slate-900 text-slate-500 transition-colors cursor-pointer"
-          title="Dismiss"
+          onClick={() => setShowUpload(false)}
+          className="absolute top-4.5 right-4.5 w-7 h-7 flex items-center justify-center rounded-lg border border-slate-100 bg-slate-50 hover:bg-slate-100 hover:text-slate-900 text-slate-500 transition-colors cursor-pointer"
+          title="Close"
         >
-          <TbX className="text-sm" />
+          <TbX className="text-sm stroke-[2.5]" />
         </button>
 
-        {uploadingFiles.length > 0 ? (
-          <div className="flex flex-col items-center gap-3 w-full max-w-xs">
-            <TbLoader2 className="text-[30px] text-border-accent animate-spin" />
-            <div className="w-full text-center">
-              <span className="text-[14px] font-medium text-text-primary block">
-                Uploading...
-              </span>
-              <div className="w-full bg-surface-2 h-1.5 rounded-full mt-2 overflow-hidden border border-border-custom">
-                <div 
-                  className="bg-border-accent h-full rounded-full transition-all duration-200" 
-                  style={{ width: `${uploadingFiles[0]?.progress || 0}%` }}
-                />
+        {/* Header */}
+        <div className="space-y-1">
+          <h3 className="text-sm font-bold text-slate-800 tracking-tight">Upload Trajectory Videos</h3>
+          <p className="text-[10px] text-slate-400 font-semibold leading-relaxed">
+            Select or drag files to add annotated cook paths to your datasets
+          </p>
+        </div>
+
+        {/* Drag Drop Inner Box */}
+        <motion.div
+          onDragEnter={handleDrag}
+          onDragOver={handleDrag}
+          onDragLeave={handleDrag}
+          onDrop={handleDrop}
+          onClick={onButtonClick}
+          animate={{ scale: isDragActive ? 1.015 : 1 }}
+          transition={{ type: "spring", stiffness: 350, damping: 25 }}
+          className={`flex flex-col items-center justify-center rounded-xl p-8 text-center border-2 border-dashed transition-all duration-150 cursor-pointer ${
+            isDragActive
+              ? "border-slate-800 bg-slate-50"
+              : "border-slate-200 bg-slate-50/50 hover:border-slate-300"
+          }`}
+        >
+          {uploadingFiles.length > 0 ? (
+            <div className="flex flex-col items-center gap-3.5 w-full max-w-[260px]">
+              {/* Premium Rotating Circle Loader */}
+              <div className="w-9 h-9 rounded-full border-2 border-slate-100 border-t-slate-900 animate-spin flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
               </div>
-              <span className="text-[11px] text-text-muted mt-1 block">
-                {uploadingFiles[0]?.name} ({uploadingFiles[0]?.progress}%)
-              </span>
+              <div className="w-full text-center space-y-1.5">
+                <span className="text-[11px] font-bold text-slate-800 block">
+                  Uploading files...
+                </span>
+                <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                  <div 
+                    className="bg-slate-900 h-full rounded-full transition-all duration-200" 
+                    style={{ width: `${uploadingFiles[0]?.progress || 0}%` }}
+                  />
+                </div>
+                <span className="text-[9px] text-slate-400 font-bold block truncate">
+                  {uploadingFiles[0]?.name} ({uploadingFiles[0]?.progress}%)
+                </span>
+              </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <TbUpload className="text-[30px] text-text-muted mb-2.5 block" />
-            <span className="text-[14px] font-medium text-text-primary">
-              Drag &amp; drop your videos here
-            </span>
-            <span className="text-[12px] text-text-muted mt-1">
-              MP4, MOV — up to 500 MB per file
-            </span>
-          </>
-        )}
+          ) : (
+            <>
+              <TbUpload className="text-[26px] text-slate-400 mb-2 block" />
+              <span className="text-[12px] font-bold text-slate-700">
+                Drag &amp; drop your videos here
+              </span>
+              <span className="text-[10px] text-slate-400 mt-1 font-semibold">
+                MP4, MOV — up to 500 MB per file
+              </span>
+            </>
+          )}
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
