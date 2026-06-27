@@ -26,9 +26,11 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
     setSearchQuery
   } = useGordonStore()
 
-  // Dynamic titles based on active source filter
+  // Dynamic title based on section + source filter
   let title = "All Videos"
-  if (sourceFilter === "rayban") {
+  if (pathname.startsWith("/dashboard/marketplace")) {
+    title = "Marketplace"
+  } else if (sourceFilter === "rayban") {
     title = "Ray-Ban Meta"
   } else if (sourceFilter === "uploaded") {
     title = "Uploaded Videos"
@@ -206,16 +208,18 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
           <TbChevronDown className="text-[9px] text-slate-400" />
         </motion.div>
 
-        {/* Upload — primary CTA */}
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={handleUploadClick}
-          className="flex items-center gap-1 bg-slate-950 text-white font-semibold text-[11px] rounded-lg py-1.5 px-3 hover:bg-slate-800 cursor-pointer transition-all"
-        >
-          <TbUpload className="text-[11px] stroke-[2.5]" />
-          <span>Upload</span>
-        </motion.button>
+        {/* CTA — Upload in Creator, hidden in Marketplace */}
+        {!pathname.startsWith("/dashboard/marketplace") && (
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleUploadClick}
+            className="flex items-center gap-1 bg-slate-950 text-white font-semibold text-[11px] rounded-lg py-1.5 px-3 hover:bg-slate-800 cursor-pointer transition-all"
+          >
+            <TbUpload className="text-[11px] stroke-[2.5]" />
+            <span>Upload</span>
+          </motion.button>
+        )}
       </div>
     </header>
   )
