@@ -142,25 +142,57 @@ export default function GalleryGrid() {
               <motion.button
                 key={cat.name}
                 variants={slideUp}
+                whileHover={{ y: -3, scale: 1.015, boxShadow: "0 10px 20px -5px rgba(0, 0, 0, 0.04)" }}
+                whileTap={{ scale: 0.985 }}
+                transition={{ type: "spring", stiffness: 420, damping: 24 }}
                 onClick={() => setCategoryFilter(isActive ? "all" : cat.name)}
-                className={`flex flex-col items-center justify-between p-5 rounded-[20px] bg-[#fafafb] hover:bg-[#efefef]/60 border transition-all duration-150 h-[145px] text-center cursor-pointer w-full group relative overflow-hidden ${
+                className={`flex flex-col items-center justify-between p-5 rounded-[20px] bg-[#fafafb] border h-[145px] text-center cursor-pointer w-full group relative overflow-hidden transition-colors duration-150 ${
                   isActive
                     ? "border-slate-400 shadow-sm bg-white"
-                    : "border-slate-200/50 hover:border-slate-300"
+                    : "border-slate-200/50 hover:border-slate-350"
                 }`}
               >
                 {/* Apple-style shiny blue 3D folder graphic - Centered */}
-                <div className="relative w-16 h-11 select-none flex justify-center items-center mx-auto mt-1">
+                <div className="relative w-16 h-12 select-none flex justify-center items-center mx-auto mt-1">
                   {/* Rear tab background */}
-                  <div className="absolute top-0 left-2 w-12 h-9 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg shadow-sm border-t border-blue-300" />
+                  <div className="absolute top-1.5 left-2 w-12 h-9 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg shadow-sm border-t border-blue-300 z-10" />
                   
+                  {/* Dynamic Sheets peaking out when files exist (count > 0) */}
+                  {count > 0 && (
+                    <>
+                      {/* Sheet 1 */}
+                      <motion.div 
+                        key={`sheet1-${count}`}
+                        initial={{ y: -16, opacity: 0, rotate: -8 }}
+                        animate={{ y: -3, opacity: 1, rotate: -8 }}
+                        transition={{ type: "spring", stiffness: 350, damping: 20 }}
+                        className="absolute left-2.5 w-7 h-8.5 bg-white border border-slate-200 rounded shadow-xs text-[5px] font-bold text-slate-400 p-0.5 flex flex-col justify-between z-20"
+                      >
+                        <span className="font-mono text-slate-300 scale-90">MOV</span>
+                        <div className="w-full h-0.5 bg-slate-100 rounded-xs" />
+                      </motion.div>
+                      
+                      {/* Sheet 2 */}
+                      <motion.div 
+                        key={`sheet2-${count}`}
+                        initial={{ y: -20, opacity: 0, rotate: 6 }}
+                        animate={{ y: -5, opacity: 1, rotate: 6 }}
+                        transition={{ type: "spring", stiffness: 320, damping: 18, delay: 0.04 }}
+                        className="absolute left-6 w-7 h-8.5 bg-white border border-slate-200 rounded shadow-xs text-[5px] font-bold text-slate-500 p-0.5 flex flex-col justify-between z-20"
+                      >
+                        <span className="font-mono text-slate-400 scale-90">MP4</span>
+                        <div className="w-full h-0.5 bg-slate-100 rounded-xs" />
+                      </motion.div>
+                    </>
+                  )}
+
                   {/* Front tab face overlay */}
-                  <div className="absolute bottom-0 left-1 w-[52px] h-[31px] bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg border-t border-blue-400 shadow-md flex items-end px-1.5 pb-1">
+                  <div className="absolute bottom-0 left-1 w-[52px] h-[31px] bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg border-t border-blue-400 shadow-md flex items-end px-1.5 pb-1 z-35">
                     <div className="w-1.5 h-1.5 rounded-full bg-blue-300/40" />
                   </div>
                   
                   {/* Folder Tab back */}
-                  <div className="absolute top-[-1px] left-2.5 w-5 h-1.5 bg-blue-400 rounded-t-sm" />
+                  <div className="absolute top-0.5 left-2.5 w-5 h-1.5 bg-blue-400 rounded-t-sm z-0" />
                 </div>
 
                 <div className="text-center w-full mt-2">

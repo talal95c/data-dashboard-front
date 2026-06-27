@@ -20,6 +20,9 @@ interface GordonStore {
   gordonStatus: 'online' | 'offline' | 'busy';
   toasts: { id: string; type: 'success' | 'error' | 'info'; text: string }[];
   searchQuery: string;
+  activeChef: string;
+  purchasedChefs: string[];
+  robotCredits: number;
   
   // Actions
   setUser: (user: User | null) => void;
@@ -36,6 +39,9 @@ interface GordonStore {
   addToast: (text: string, type?: 'success' | 'error' | 'info') => void;
   removeToast: (id: string) => void;
   setSearchQuery: (query: string) => void;
+  setActiveChef: (chefName: string) => void;
+  purchaseChef: (chefName: string) => void;
+  addCredits: (amount: number) => void;
 }
 
 const mockVideos: Video[] = [
@@ -119,6 +125,9 @@ export const useGordonStore = create<GordonStore>((set) => ({
   gordonStatus: 'online',
   toasts: [],
   searchQuery: '',
+  activeChef: 'Gordon Ramsay',
+  purchasedChefs: ['Gordon Ramsay'],
+  robotCredits: 200,
 
   setUser: (user) => set({ user }),
   setAccessToken: (accessToken) => set({ accessToken }),
@@ -153,4 +162,10 @@ export const useGordonStore = create<GordonStore>((set) => ({
     toasts: state.toasts.filter((t) => t.id !== id)
   })),
   setSearchQuery: (searchQuery) => set({ searchQuery }),
+  setActiveChef: (activeChef) => set({ activeChef }),
+  purchaseChef: (chefName) => set((state) => {
+    if (state.purchasedChefs.includes(chefName)) return {};
+    return { purchasedChefs: [...state.purchasedChefs, chefName] };
+  }),
+  addCredits: (amount) => set((state) => ({ robotCredits: state.robotCredits + amount })),
 }))
