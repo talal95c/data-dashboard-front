@@ -173,7 +173,7 @@ export default function AppSidebar() {
                       className="flex items-center justify-between w-full min-w-0"
                     >
                       <span className="text-[11px] font-extrabold tracking-wider text-slate-900 uppercase font-sans truncate pr-1">
-                        gordon-data
+                        ramarm-studio
                       </span>
                       <TbSelector className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                     </motion.div>
@@ -330,7 +330,7 @@ export default function AppSidebar() {
                         {displayName}
                       </span>
                       <span className="text-[9px] text-slate-400 block truncate">
-                        Chef Pilot
+                        Robot Operator
                       </span>
                     </motion.div>
                   )}

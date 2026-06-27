@@ -2,12 +2,12 @@ export type VideoSource = 'rayban' | 'uploaded';
 
 export type VideoStatus = 'analyzed' | 'pending' | 'processing' | 'error';
 
-export type GestureCategory = 
-  | 'Cutting' 
-  | 'Cooking / Searing' 
-  | 'Plating / Dressing' 
-  | 'Liquids / Deglazing' 
-  | 'Herbs / Greens' 
+export type GestureCategory =
+  | 'Pick & Place'
+  | 'Welding'
+  | 'Assembly'
+  | 'Packaging'
+  | 'Inspection'
   | 'Generic Upload';
 
 export interface Video {

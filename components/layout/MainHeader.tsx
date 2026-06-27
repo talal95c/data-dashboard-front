@@ -27,13 +27,13 @@ export default function MainHeader({ onToggleMobileFilters }: MainHeaderProps) {
   } = useGordonStore()
 
   // Dynamic title based on section + source filter
-  let title = "All Videos"
+  let title = "All Recordings"
   if (pathname.startsWith("/dashboard/marketplace")) {
     title = "Marketplace"
   } else if (sourceFilter === "rayban") {
     title = "Ray-Ban Meta"
   } else if (sourceFilter === "uploaded") {
-    title = "Uploaded Videos"
+    title = "Uploaded Recordings"
   }
 
   const handleUploadClick = () => {

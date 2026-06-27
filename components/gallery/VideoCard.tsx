@@ -3,15 +3,14 @@
 import { Video, GestureCategory } from "@/types/video"
 import { useGordonStore } from "@/store/useGordonStore"
 import StatusBadge from "./StatusBadge"
-import { 
-  TbScissors, 
-  TbFlame, 
-  TbStar, 
-  TbDroplet, 
-  TbLeaf, 
-  TbUpload, 
-  TbEye, 
-  TbRobot 
+import {
+  TbScissors,
+  TbFlame,
+  TbStar,
+  TbDroplet,
+  TbUpload,
+  TbEye,
+  TbRobot
 } from "react-icons/tb"
 
 interface VideoCardProps {
@@ -24,15 +23,15 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
 
   // Category visual palette configuration
   const categoriesConfig: Record<
-    GestureCategory, 
+    GestureCategory,
     { bg: string; color: string; icon: React.ComponentType<{ className?: string }> }
   > = {
-    "Cutting": { bg: "#1e0f06", color: "#f5c4b3", icon: TbScissors },
-    "Cooking / Searing": { bg: "#071a0f", color: "#9fe1cb", icon: TbFlame },
-    "Plating / Dressing": { bg: "#0f0a1e", color: "#cecbf6", icon: TbStar },
-    "Liquids / Deglazing": { bg: "#07101e", color: "#b5d4f4", icon: TbDroplet },
-    "Herbs / Greens": { bg: "#061a0a", color: "#c0dd97", icon: TbLeaf },
-    "Generic Upload": { bg: "#1a071a", color: "#f4c0d1", icon: TbUpload }
+    "Pick & Place":  { bg: "#07101e", color: "#b5d4f4", icon: TbStar     },
+    "Welding":       { bg: "#1e0a03", color: "#f5c4a0", icon: TbFlame    },
+    "Assembly":      { bg: "#0a0f1e", color: "#c4d4f5", icon: TbScissors },
+    "Packaging":     { bg: "#071a0f", color: "#9fe1a5", icon: TbDroplet  },
+    "Inspection":    { bg: "#0f0a1e", color: "#d4c4f5", icon: TbEye      },
+    "Generic Upload":{ bg: "#1a071a", color: "#f4c0d1", icon: TbUpload   }
   }
 
   // Fallback to upload categories if null

@@ -55,7 +55,7 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
     if (onCloseMobile) onCloseMobile()
   }
 
-  const handlePublishSubmit = (e: React.FormEvent) => {
+  const handlePublishSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!modelName.trim()) return
     setSubmitted(true)
@@ -140,7 +140,7 @@ export default function NavPanel({ isMobileDrawer = false, onCloseMobile }: NavP
           <>
             <div className="mb-6">
               <div className="flex items-center justify-between px-2 mb-3">
-                <h3 className="text-sm font-semibold text-text-primary">Videos</h3>
+                <h3 className="text-sm font-semibold text-text-primary">Recordings</h3>
                 <button onClick={handleUploadClick} className="hover:text-text-primary p-0.5 text-text-muted cursor-pointer focus:outline-none" title="Add Video">
                   <TbPlus className="text-sm" />
                 </button>

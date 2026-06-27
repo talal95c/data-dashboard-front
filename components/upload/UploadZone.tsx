@@ -2,9 +2,9 @@
 
 import { useState, useRef, useEffect, useCallback } from "react"
 import { useGordonStore } from "@/store/useGordonStore"
-import { TbUpload, TbX, TbLoader2 } from "react-icons/tb"
+import { TbUpload, TbX } from "react-icons/tb"
 import { Video } from "@/types/video"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 export default function UploadZone() {
   const { addVideo, setShowUpload, addToast } = useGordonStore()
@@ -164,9 +164,9 @@ export default function UploadZone() {
 
         {/* Header */}
         <div className="space-y-1">
-          <h3 className="text-sm font-bold text-slate-800 tracking-tight">Upload Trajectory Videos</h3>
+          <h3 className="text-sm font-bold text-slate-800 tracking-tight">Upload Motion Recordings</h3>
           <p className="text-[10px] text-slate-400 font-semibold leading-relaxed">
-            Select or drag files to add annotated cook paths to your datasets
+            Select or drag files to add motion recordings to your robot training set
           </p>
         </div>
 

@@ -5,20 +5,15 @@ import { useGordonStore } from "@/store/useGordonStore"
 import StatusBadge from "./StatusBadge"
 import { Video, GestureCategory } from "@/types/video"
 import { motion, AnimatePresence } from "framer-motion"
-import { 
-  TbVideoOff, 
-  TbX, 
-  TbPlayerPlay, 
-  TbRobot, 
-  TbCalendar, 
-  TbClock, 
-  TbEye, 
-  TbCpu,
+import {
+  TbX,
+  TbPlayerPlay,
+  TbRobot,
+  TbEye,
   TbScissors,
   TbFlame,
   TbStar,
   TbDroplet,
-  TbLeaf,
   TbUpload,
   TbMovie
 } from "react-icons/tb"
@@ -65,11 +60,11 @@ export default function GalleryGrid() {
     setTimeout(() => {
       // Pick a random category on completion if it was generic
       const categories: GestureCategory[] = [
-        "Cutting", 
-        "Cooking / Searing", 
-        "Plating / Dressing", 
-        "Liquids / Deglazing", 
-        "Herbs / Greens"
+        "Pick & Place",
+        "Welding",
+        "Assembly",
+        "Packaging",
+        "Inspection"
       ]
       const randomCat = categories[Math.floor(Math.random() * categories.length)]
       
@@ -88,11 +83,11 @@ export default function GalleryGrid() {
 
   // Folder categories list configurations
   const categoriesList: { name: GestureCategory; icon: any; color: string }[] = [
-    { name: "Cutting", icon: TbScissors, color: "#e05b35" },
-    { name: "Cooking / Searing", icon: TbFlame, color: "#10b981" },
-    { name: "Plating / Dressing", icon: TbStar, color: "#6366f1" },
-    { name: "Liquids / Deglazing", icon: TbDroplet, color: "#0ea5e9" },
-    { name: "Herbs / Greens", icon: TbLeaf, color: "#22c55e" }
+    { name: "Pick & Place", icon: TbStar,     color: "#0ea5e9" },
+    { name: "Welding",      icon: TbFlame,    color: "#f97316" },
+    { name: "Assembly",     icon: TbScissors, color: "#6366f1" },
+    { name: "Packaging",    icon: TbDroplet,  color: "#10b981" },
+    { name: "Inspection",   icon: TbEye,      color: "#a855f7" }
   ]
 
   // Animations
@@ -137,7 +132,6 @@ export default function GalleryGrid() {
           {categoriesList.map((cat) => {
             const count = getCategoryCount(cat.name)
             const isActive = categoryFilter === cat.name
-            const CatIcon = cat.icon
 
             return (
               <motion.button
