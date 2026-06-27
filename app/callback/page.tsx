@@ -3,7 +3,6 @@
 import { useEffect, useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useGordonStore } from "@/store/useGordonStore"
-import { TbLoader2, TbRobot } from "react-icons/tb"
 
 function CallbackContent() {
   const router = useRouter()
@@ -50,22 +49,19 @@ function CallbackContent() {
   }, [router, searchParams, setUser, setAccessToken])
 
   return (
-    <div className="flex flex-col items-center">
-      {/* BrandMark Robot Circle */}
-      <div className="w-16 h-16 bg-bg-danger rounded-full flex items-center justify-center shadow-lg shadow-red-900/30 mb-6 border border-red-500/20">
-        <TbRobot className="text-3xl text-white animate-bounce" />
+    <div className="flex flex-col items-center space-y-4">
+      {/* Minimalist Spinner */}
+      <div className="w-10 h-10 rounded-full border-2 border-slate-100 border-t-slate-900 animate-spin flex items-center justify-center">
+        <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
       </div>
 
-      <h2 className="text-xl font-bold tracking-tight text-text-primary mb-2">
-        Signing In
-      </h2>
-      <p className="text-xs text-text-muted mb-8 uppercase tracking-widest font-mono">
-        Gordon RamArm
-      </p>
+      <div className="space-y-1">
+        <h2 className="text-sm font-bold text-slate-800 tracking-tight">Authenticating Account</h2>
+        <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Gordon RamArm</p>
+      </div>
 
-      <div className="flex items-center gap-3 bg-surface-2 border border-border-custom px-4 py-3 rounded-lg w-full justify-center">
-        <TbLoader2 className="text-lg text-border-accent animate-spin" />
-        <span className="text-xs font-medium text-text-secondary">
+      <div className="bg-slate-50 border border-slate-150 py-2.5 px-4 rounded-xl w-full text-center">
+        <span className="text-xs font-semibold text-slate-650">
           {statusText}
         </span>
       </div>
@@ -75,24 +71,25 @@ function CallbackContent() {
 
 export default function CallbackPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-surface-2 text-white p-6">
-      <div className="bg-surface-1 border border-border-strong p-10 rounded-2xl max-w-sm w-full text-center shadow-2xl relative overflow-hidden">
-        {/* Glow effect */}
-        <div className="absolute -top-10 -left-10 w-32 h-32 bg-bg-danger rounded-full blur-3xl opacity-10 pointer-events-none"></div>
-        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-border-accent rounded-full blur-3xl opacity-10 pointer-events-none"></div>
+    <div className="min-h-screen flex items-center justify-center bg-[#fafafa] relative overflow-hidden p-4">
+      {/* Panning grid background canvas */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-100 pointer-events-none" />
 
-        <div className="relative z-10">
-          <Suspense fallback={
-            <div className="flex items-center gap-3 bg-surface-2 border border-border-custom px-4 py-3 rounded-lg w-full justify-center">
-              <TbLoader2 className="text-lg text-border-accent animate-spin" />
-              <span className="text-xs font-medium text-text-secondary">
-                Initializing session...
-              </span>
+      {/* Main card */}
+      <div className="relative z-10 bg-white border border-slate-200/80 p-8 rounded-2xl max-w-sm w-full shadow-xl shadow-slate-200/50">
+        <Suspense fallback={
+          <div className="flex flex-col items-center space-y-4">
+            <div className="w-10 h-10 rounded-full border-2 border-slate-100 border-t-slate-900 animate-spin flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
             </div>
-          }>
-            <CallbackContent />
-          </Suspense>
-        </div>
+            <div className="space-y-1 text-center">
+              <h2 className="text-sm font-bold text-slate-800 tracking-tight">Loading Session</h2>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Please wait...</p>
+            </div>
+          </div>
+        }>
+          <CallbackContent />
+        </Suspense>
       </div>
     </div>
   )
