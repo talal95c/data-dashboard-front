@@ -2,129 +2,64 @@
 
 import { useState } from "react"
 import { useGordonStore } from "@/store/useGordonStore"
-import {
-  TbPlus,
-  TbCheck,
-  TbFlame,
-  TbScissors,
-  TbStar,
-  TbDroplet,
-  TbVector,
-  TbEye,
-  TbSparkles
-} from "react-icons/tb"
+import { TbPlus, TbCheck } from "react-icons/tb"
 import { motion, AnimatePresence } from "framer-motion"
 
-const chefMarketplace = [
+const tasks = [
   {
-    id: "ramsay",
-    name: "Gordon Ramsay",
-    restaurant: "Restaurant Gordon Ramsay, London",
-    title: "Master Chef Trajectory Pack",
-    specialty: "High-Intensity Searing & Wok Cooking",
-    level: 99,
-    cost: 0,
-    icon: TbFlame,
-    avatar: "/gordon ramsey.jpg",
-    specs: {
-      trajectories: "184 Paths",
-      gear: "Ray-Ban Meta v2",
-      size: "12.4 GB",
-      accuracy: "99.2%"
-    },
-    skills: [
-      { name: "Steak Searing (Aggressive)", value: 99 },
-      { name: "Pan Deglazing (High Heat)",  value: 95 },
-      { name: "Chopping Pace",              value: 85 }
-    ]
-  },
-  {
-    id: "bocuse",
-    name: "Paul Bocuse",
-    restaurant: "L'Auberge du Pont de Collonges, Lyon",
-    title: "French Classical Trajectory Pack",
-    specialty: "Precision Sauces & Sauce Plating",
-    level: 98,
-    cost: 150,
-    icon: TbStar,
-    avatar: "/paul-bocuse.jpg",
-    specs: {
-      trajectories: "248 Paths",
-      gear: "Ray-Ban Meta Pro",
-      size: "18.1 GB",
-      accuracy: "98.7%"
-    },
-    skills: [
-      { name: "Sauce Plating (Precision)", value: 98 },
-      { name: "Slow Reduction Control",    value: 96 },
-      { name: "Micro-Greens Dressing",     value: 94 }
-    ]
-  },
-  {
-    id: "ducasse",
-    name: "Alain Ducasse",
-    restaurant: "Le Louis XV, Monte Carlo",
-    title: "Michelin 3-Star Trajectory Pack",
-    specialty: "Haute Cuisine Broths & Roasting",
+    id: "pick-place",
+    name: "Pick & Place",
+    company: "AutoLine GmbH",
+    industry: "Automotive, Stuttgart",
+    specialty: "3-axis linear arm path",
     level: 97,
-    cost: 130,
-    icon: TbDroplet,
-    avatar: "/Alain-Ducasse.jpg",
-    specs: {
-      trajectories: "210 Paths",
-      gear: "Ray-Ban Meta v2",
-      size: "15.4 GB",
-      accuracy: "97.8%"
-    },
-    skills: [
-      { name: "High-Precision Roasting",   value: 97 },
-      { name: "Classical Broth Simmering", value: 94 },
-      { name: "Herb Dressing",             value: 90 }
-    ]
+    cost: 0,
+    avatar: "https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&w=600&q=80",
+    specs: { trajectories: "340", gear: "Ray-Ban Meta v2", size: "8.2 GB", accuracy: "98.5%" }
   },
   {
-    id: "bottura",
-    name: "Massimo Bottura",
-    restaurant: "Osteria Francescana, Modena",
-    title: "Avant-Garde Trajectory Pack",
-    specialty: "Modernist Plating & Pastry Dressing",
-    level: 96,
-    cost: 110,
-    icon: TbSparkles,
-    avatar: "/massimo.jpg",
-    specs: {
-      trajectories: "192 Paths",
-      gear: "Ray-Ban Meta v2",
-      size: "14.2 GB",
-      accuracy: "96.5%"
-    },
-    skills: [
-      { name: "Modernist Sauce Splattering",  value: 96 },
-      { name: "Deconstructed Pastry Piping",  value: 95 },
-      { name: "Symmetric Herb Dressing",      value: 92 }
-    ]
-  },
-  {
-    id: "etchebest",
-    name: "Philippe Etchebest",
-    restaurant: "Quatrième Mur, Bordeaux",
-    title: "Bistro Mastery Trajectory Pack",
-    specialty: "Fast Rustic Cuts & Sauce Dressing",
+    id: "packaging",
+    name: "Box Packaging",
+    company: "PackTech Industries",
+    industry: "Food & Beverage, Lyon",
+    specialty: "Fold & seal sequence",
     level: 91,
-    cost: 70,
-    icon: TbScissors,
-    avatar: "/phlipe etchebest.jpg",
-    specs: {
-      trajectories: "136 Paths",
-      gear: "Ray-Ban Meta v1",
-      size: "9.8 GB",
-      accuracy: "94.1%"
-    },
-    skills: [
-      { name: "Rustic Herb Chopping (Speed)", value: 91 },
-      { name: "Quick Olive Oil Drizzle",      value: 87 },
-      { name: "Fast Pan Tossing",             value: 83 }
-    ]
+    cost: 120,
+    avatar: "https://images.unsplash.com/photo-1601598851547-4302969d0614?auto=format&fit=crop&w=600&q=80",
+    specs: { trajectories: "210", gear: "Ray-Ban Meta v2", size: "6.4 GB", accuracy: "97.1%" }
+  },
+  {
+    id: "welding",
+    name: "Arc Welding",
+    company: "WeldBot Corp",
+    industry: "Aerospace, Toulouse",
+    specialty: "Continuous bead pattern",
+    level: 98,
+    cost: 180,
+    avatar: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=80",
+    specs: { trajectories: "185", gear: "Ray-Ban Meta Pro", size: "11.3 GB", accuracy: "99.1%" }
+  },
+  {
+    id: "inspection",
+    name: "Visual Inspection",
+    company: "QualScan Labs",
+    industry: "Electronics, Shenzhen",
+    specialty: "Multi-point scan path",
+    level: 94,
+    cost: 150,
+    avatar: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=80",
+    specs: { trajectories: "290", gear: "Ray-Ban Meta v2", size: "9.7 GB", accuracy: "96.8%" }
+  },
+  {
+    id: "assembly",
+    name: "Screw Assembly",
+    company: "AssemBot SA",
+    industry: "Medical Devices, Basel",
+    specialty: "Torque-controlled rotation",
+    level: 88,
+    cost: 90,
+    avatar: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
+    specs: { trajectories: "155", gear: "Ray-Ban Meta v1", size: "7.1 GB", accuracy: "95.3%" }
   }
 ]
 
@@ -143,28 +78,21 @@ const cardVariants = {
 }
 
 export default function MarketplacePage() {
-  const [isInstalling, setIsInstalling]     = useState<string | null>(null)
+  const [isInstalling, setIsInstalling]       = useState<string | null>(null)
   const [installProgress, setInstallProgress] = useState(0)
 
   const {
-    activeChef,
-    purchasedChefs,
-    robotCredits,
-    setActiveChef,
-    purchaseChef,
-    addCredits,
-    addToast
+    activeChef, purchasedChefs, robotCredits,
+    setActiveChef, purchaseChef, addCredits, addToast
   } = useGordonStore()
 
-  const handlePurchase = (chefId: string, cost: number, chefName: string) => {
+  const handlePurchase = (taskId: string, cost: number, taskName: string) => {
     if (robotCredits < cost) {
-      addToast("Insufficient credits! Please add more credits.", "error")
+      addToast("Insufficient credits. Please add more credits.", "error")
       return
     }
-
-    setIsInstalling(chefName)
+    setIsInstalling(taskName)
     setInstallProgress(0)
-
     let progress = 0
     const interval = setInterval(() => {
       progress += 10
@@ -172,10 +100,10 @@ export default function MarketplacePage() {
       if (progress >= 100) {
         clearInterval(interval)
         addCredits(-cost)
-        purchaseChef(chefName)
-        setActiveChef(chefName)
+        purchaseChef(taskName)
+        setActiveChef(taskName)
         setIsInstalling(null)
-        addToast(`Dataset installed: Active arm trajectory updated to ${chefName}!`, "success")
+        addToast(`Model installed: "${taskName}" ready to deploy on robot`, "success")
       }
     }, 250)
   }
@@ -195,10 +123,7 @@ export default function MarketplacePage() {
           <span className="text-base font-bold text-slate-900 mt-0.5 block">{robotCredits} Credits</span>
         </div>
         <button
-          onClick={() => {
-            addCredits(100)
-            addToast("Added 100 Credits to balance", "success")
-          }}
+          onClick={() => { addCredits(100); addToast("Added 100 Credits to balance", "success") }}
           className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-950 hover:bg-slate-800 text-white rounded-lg text-xs font-bold cursor-pointer transition-all active:scale-[0.98]"
         >
           <TbPlus className="text-xs stroke-[2.5]" />
@@ -206,20 +131,20 @@ export default function MarketplacePage() {
         </button>
       </motion.div>
 
-      {/* Chef cards grid */}
+      {/* Task cards grid */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 gap-5"
       >
-        {chefMarketplace.map((chef) => {
-          const isPurchased = purchasedChefs.includes(chef.name)
-          const isActive    = activeChef === chef.name
+        {tasks.map((task) => {
+          const isPurchased = purchasedChefs.includes(task.name)
+          const isActive    = activeChef === task.name
 
           return (
             <motion.div
-              key={chef.id}
+              key={task.id}
               variants={cardVariants}
               whileHover={{ y: -3, scale: 1.01, boxShadow: "0 10px 20px -5px rgba(0,0,0,0.04)" }}
               whileTap={{ scale: 0.995 }}
@@ -228,32 +153,30 @@ export default function MarketplacePage() {
                 isActive ? "border-slate-400" : "border-slate-200/80"
               }`}
             >
-              {/* Card cover panel — chef photo fills the rectangle */}
+              {/* Photo panel */}
               <div className="relative w-full h-[135px] rounded-xl overflow-hidden flex flex-col justify-between p-3">
-                {/* Chef photo background */}
                 <img
-                  src={chef.avatar}
-                  alt={chef.name}
+                  src={task.avatar}
+                  alt={task.name}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                {/* Dark gradient overlay for legibility */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
 
                 {/* Level badge */}
                 <div className="w-full flex items-center justify-between relative z-10">
                   <span className="text-[8px] bg-white/15 backdrop-blur-sm text-white rounded-full px-2 py-0.5 font-bold tracking-wider border border-white/20 uppercase">
-                    Lvl {chef.level}
+                    v{(task.level / 10).toFixed(1)}
                   </span>
                 </div>
 
-                {/* Name + action button */}
+                {/* Name + action */}
                 <div className="w-full flex items-end justify-between relative z-10">
                   <div className="min-w-0 pr-2">
                     <h4 className="text-[11px] font-extrabold text-white leading-tight truncate drop-shadow">
-                      {chef.name}
+                      {task.name}
                     </h4>
                     <span className="text-[8px] text-white/70 font-semibold truncate block mt-0.5">
-                      {chef.restaurant.split(",")[0]}
+                      {task.industry}
                     </span>
                   </div>
 
@@ -261,22 +184,19 @@ export default function MarketplacePage() {
                     isActive ? (
                       <div className="bg-white/15 backdrop-blur-sm text-white rounded-lg px-2.5 py-1 text-[8px] font-extrabold border border-white/20 uppercase tracking-wider flex items-center gap-1">
                         <TbCheck className="text-[9px] text-emerald-400 stroke-[3]" />
-                        <span>Active</span>
+                        <span>Deployed</span>
                       </div>
                     ) : (
                       <button
-                        onClick={() => {
-                          setActiveChef(chef.name)
-                          addToast(`Loaded trajectory weights for ${chef.name}`, "info")
-                        }}
+                        onClick={() => { setActiveChef(task.name); addToast(`Loaded motion model: ${task.name}`, "info") }}
                         className="bg-white text-slate-900 rounded-lg px-2.5 py-1 text-[8px] font-extrabold shadow-xs cursor-pointer uppercase tracking-wider hover:bg-white/90 transition-colors"
                       >
-                        Activate
+                        Deploy
                       </button>
                     )
                   ) : (
                     <button
-                      onClick={() => handlePurchase(chef.id, chef.cost, chef.name)}
+                      onClick={() => handlePurchase(task.id, task.cost, task.name)}
                       className="bg-white text-slate-900 rounded-lg px-2.5 py-1 text-[8px] font-extrabold shadow-xs cursor-pointer uppercase tracking-wider hover:bg-white/90 transition-colors"
                     >
                       Install
@@ -285,43 +205,38 @@ export default function MarketplacePage() {
                 </div>
               </div>
 
-              {/* Bottom info row: specialty + avatar */}
-              <div className="flex items-center justify-between gap-3 min-w-0">
-                <div className="min-w-0">
-                  <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">Style Trajectory</span>
-                  <span className="text-[10px] font-bold text-slate-800 truncate block mt-0.5">
-                    {chef.specialty.split(" & ")[0]}
-                  </span>
-                  <span className="text-[8px] text-slate-400 font-semibold block truncate mt-0.5">
-                    Recorded via {chef.specs.gear}
-                  </span>
-                </div>
-
+              {/* Task info */}
+              <div className="min-w-0">
+                <span className="text-[9px] uppercase font-bold text-slate-400 block tracking-wider">Motion Path</span>
+                <span className="text-[10px] font-bold text-slate-800 truncate block mt-0.5">{task.specialty}</span>
+                <span className="text-[8px] text-slate-400 font-semibold block truncate mt-0.5">
+                  Recorded via {task.specs.gear} · {task.company}
+                </span>
               </div>
 
               {/* Stats capsule */}
               <div className="bg-slate-50 border border-slate-100 rounded-full py-1.5 px-3 flex items-center justify-around text-[9px] font-bold text-slate-500 uppercase tracking-wide">
                 <span className="flex flex-col items-center">
-                  <span className="text-slate-800 font-bold text-[9px]">{chef.specs.trajectories.split(" ")[0]}</span>
+                  <span className="text-slate-800 font-bold text-[9px]">{task.specs.trajectories}</span>
                   <span className="text-[7px] text-slate-400 font-bold scale-90">Paths</span>
                 </span>
                 <span className="w-[1px] h-3 bg-slate-200" />
                 <span className="flex flex-col items-center">
-                  <span className="text-slate-800 font-bold text-[9px]">{chef.specs.accuracy}</span>
+                  <span className="text-slate-800 font-bold text-[9px]">{task.specs.accuracy}</span>
                   <span className="text-[7px] text-slate-400 font-bold scale-90">Accuracy</span>
                 </span>
                 <span className="w-[1px] h-3 bg-slate-200" />
                 <span className="flex flex-col items-center">
-                  <span className="text-slate-800 font-bold text-[9px]">{chef.specs.size}</span>
+                  <span className="text-slate-800 font-bold text-[9px]">{task.specs.size}</span>
                   <span className="text-[7px] text-slate-400 font-bold scale-90">Weight</span>
                 </span>
               </div>
 
               {/* Price footer */}
               <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-slate-400">
-                <span>Dataset Price</span>
+                <span>Model Price</span>
                 <span className="text-[11px] font-bold text-slate-900">
-                  {chef.cost === 0 ? "Included" : `${chef.cost} Credits`}
+                  {task.cost === 0 ? "Free" : `${task.cost} Credits`}
                 </span>
               </div>
             </motion.div>
@@ -329,7 +244,7 @@ export default function MarketplacePage() {
         })}
       </motion.div>
 
-      {/* Installation progress overlay */}
+      {/* Installation overlay */}
       <AnimatePresence>
         {isInstalling && (
           <motion.div
@@ -349,9 +264,9 @@ export default function MarketplacePage() {
                 <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
               </div>
               <div className="space-y-1.5">
-                <h4 className="text-xs font-bold text-slate-800 tracking-tight">Installing Trajectory Pack</h4>
+                <h4 className="text-xs font-bold text-slate-800 tracking-tight">Installing Motion Model</h4>
                 <p className="text-[10px] text-slate-400 font-semibold leading-relaxed">
-                  Calibrating robotic joint weights for {isInstalling}
+                  Compiling trajectory vectors for "{isInstalling}"
                 </p>
               </div>
               <div className="w-full h-1 bg-slate-100/80 rounded-full overflow-hidden">
